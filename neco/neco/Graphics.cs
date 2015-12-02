@@ -389,18 +389,38 @@ namespace neco
         
             
     }
-    //класс функционала графической формы интерфейса
+    
+    /// <summary>
+    /// класс функционала графической формы интерфейса
+    /// </summary>
     class GUI_Container
     {
-        //открытый на чтение (или не совсем) файл .json
+        /// <summary>
+        /// открытый на чтение (или не совсем) файл .json
+        /// </summary>
         public FileStream JsonFile;
-        //3 поверхности для рисования p, p и m графиков соответственно
+        
+        /// <summary>
+        /// 3 поверхности для рисования p, p и m графиков соответственно
+        /// </summary>
         public StackedPlotters[] Panes;
-        //график критерия качества
+        
+        /// <summary>
+        /// график критерия качества
+        /// </summary>
         public plotter quality;
-        //метки для плоттеров
+        
+        /// <summary>
+        /// метки для плоттеров
+        /// </summary>
         public Label[] PanesLabels;
-        //открывашка файлов json и инициализирует объект ESystem им.
+        
+        /// <summary>
+        /// открывашка файлов json и инициализирует объект ESystem им.
+        /// </summary>
+        /// <param name="isSpline"></param>
+        /// <param name="isNoise"></param>
+        /// <returns></returns>
         public ESystem OpenJsonFile(bool isSpline, bool isNoise)
         {
             OpenFileDialog OFD = new OpenFileDialog();
@@ -415,7 +435,13 @@ namespace neco
             }
             else return null;
         }
-        //инициализатор плоттеров для рисования и накидываетль их на форму
+
+        /// <summary>
+        /// инициализатор плоттеров для рисования и накидываетль их на форму
+        /// </summary>
+        /// <param name="PlottersCount"></param>
+        /// <param name="LeftTopCorner"></param>
+        /// <param name="sys"></param>
         public void InitPlotters(int PlottersCount, Point LeftTopCorner, ESystem sys)
         {
             //метки панелей
@@ -440,7 +466,11 @@ namespace neco
             // И панели качества
             quality = new plotter(new Point(LeftTopCorner.X, LeftTopCorner.Y + 110), new Size(100, 100), Color.Red, sys.current_state.quality_f);
         }
-        //масштабирование панелей под размер формы
+
+        /// <summary>
+        ///масштабирование панелей под размер формы 
+        /// </summary>
+        /// <param name="FormSize"></param>
         public void ResizePaneAsForm(Size FormSize)
         {
             for (int i = 0; i < Panes.Length; i++)
@@ -453,14 +483,21 @@ namespace neco
             quality.Location = new Point(Panes[0].Location.X, Panes[0].Location.Y + Panes[0].Height + 15);
             PanesLabels[3].Location = new Point(quality.Location.X + quality.Width/2 - PanesLabels[3].Width/2, quality.Location.Y - PanesLabels[3].Height/2);
         }
-        //перерисовка массива панелей
+
+        /// <summary>
+        /// перерисовка массива панелей
+        /// </summary>
         public void redraw()
         {
             for (int i = 0; i < this.Panes.Length;i++ )
                 Panes[i].redraw();
             quality.redraw();
         }
-        //перегружает панели из системы
+        
+        /// <summary>
+        /// перегружает панели из системы
+        /// </summary>
+        /// <param name="sys"></param>
         public void LoadPanes(ESystem sys)
         {
             Panes[0].LoadPlottersFromSys(sys.current_state.x);
@@ -470,11 +507,16 @@ namespace neco
             quality.SetVisibleRangeAll();
         }
     };
-    //класс рисовки матриц в коробочках
+
+    
+    /// <summary>
+    /// класс рисовки матриц в коробочках
+    /// </summary>
     class MatrixDrawer : GroupBox
     {
         Label[,] Vals;
         int RoundCount;
+
         public MatrixDrawer(Matrix M)
         {
             RoundCount = 2;
@@ -496,6 +538,7 @@ namespace neco
             this.Size = new Size(1, 1);
             this.AutoSize = true;
         }
+
         public void ReloadMatrix(Matrix M)
         {
             //чистка

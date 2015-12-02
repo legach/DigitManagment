@@ -8,7 +8,9 @@ using System.Runtime.Serialization;
 
 namespace neco
 {
-    //класс состояния системы.
+    /// <summary>
+    /// класс состояния системы.
+    /// </summary>
     class State
     {
 #region переменные
@@ -17,50 +19,117 @@ namespace neco
 
 
         //отсчеты векторов состояния и управления
-        public List<Matrix> x;//размерность каждого элемента списка n x 1. это отсчеты состояний системы.
-        public List<Matrix> u;//размерность каждого элемента списка m x 1. это отсчеты управляющих воздействий. 0-й элемент занулен, кроме регулятора, где он считается, а потом сдвигается время
+        /// <summary>
+        /// отсчеты векторов состояния и управления
+        /// размерность каждого элемента списка n x 1. это отсчеты состояний системы.
+        /// </summary>
+        public List<Matrix> x;
+        /// <summary>
+        /// отсчеты векторов состояния и управления
+        /// размерность каждого элемента списка m x 1. это отсчеты управляющих воздействий. 0-й элемент занулен, кроме регулятора, где он считается, а потом сдвигается время
+        /// </summary>
+        public List<Matrix> u;
 
-        //матрицы перевода x в y - матрицы p x n
+        
+        /// <summary>
+        /// матрицы перевода x в y - матрицы p x n
+        /// </summary>
         List<Matrix> int_H;
         
-        //непрерывные матрицы-описатели системы
-        List<List<Matrix>> int_analog_A;//размерность матриц - n x n (n - размерность х), запаздывание длинной L, время длинной от L и возрастает по мере рассчета
-        List<List<Matrix>> int_analog_B;//размерность матриц - m x m (m - размерность u), запаздывание длинной M, время длинной от M и возрастает по мере рассчета
-        //дискретезированные матрицы - формат как у непрерывных, только они являются результатом работы класса Digitizer
+        
+        /// <summary>
+        /// непрерывные матрицы-описатели системы
+        /// размерность матриц - n x n (n - размерность х), запаздывание длинной L, время длинной от L и возрастает по мере рассчета
+        /// </summary>
+        List<List<Matrix>> int_analog_A;
+        /// <summary>
+        /// непрерывные матрицы-описатели системы
+        /// размерность матриц - m x m (m - размерность u), запаздывание длинной M, время длинной от M и возрастает по мере рассчета
+        /// </summary>
+        List<List<Matrix>> int_analog_B;
+
+        
+        /// <summary>
+        /// дискретезированные матрицы - формат как у непрерывных, только они являются результатом работы класса Digitizer
+        /// </summary>
         List<List<Matrix>> int_A;
+        /// <summary>
+        /// дискретезированные матрицы - формат как у непрерывных, только они являются результатом работы класса Digitizer
+        /// </summary>
         List<List<Matrix>> int_B;
 
-        //массивы непрерывных задержек. НЕ лист листов, т.к. при изменении А задержки все те-же, т.е. другой массив А накладывается на так-же отдаленные от текущего t отсчеты состояний.
-        public List<double> tau;//по состоянию
-        public List<double> teta;//по управлению
+        
+        /// <summary>
+        /// массивы непрерывных задержек. НЕ лист листов, т.к. при изменении А задержки все те-же, т.е. другой массив А накладывается на так-же отдаленные от текущего t отсчеты состояний.
+        /// по состоянию
+        /// </summary>
+        public List<double> tau;
+        /// <summary>
+        /// по управлению
+        /// </summary>
+        public List<double> teta;
 
-        //массивы дискретных задержек.
-        public List<int> L;//по состоянию
-        public List<int> M;//по управлени
+        /// <summary>
+        /// массивы дискретных задержек.
+        /// по состоянию
+        /// </summary>
+        public List<int> L;
+        /// <summary>
+        /// массивы дискретных задержек.
+        /// по управлени
+        /// </summary>
+        public List<int> M;
         //############################################
-        public List<int> P;//по наблюдению
+        /// <summary>
+        /// массивы дискретных задержек.
+        /// по наблюдению
+        /// </summary>
+        public List<int> P;
         //############################################
         
-        //периоды дискретизации
-        public double T;//по состоянию
+        
+        /// <summary>
+        /// периоды дискретизации
+        /// //по состоянию
+        /// </summary>
+        public double T;
         public double sx;
         public double su;
-        public double Tx;//по состоянию
-        public double Tu;//по управлению
+        /// <summary>
+        /// периоды дискретизации
+        /// по состоянию
+        /// </summary>
+        public double Tx;
+        /// <summary>
+        /// периоды дискретизации
+        /// по управлению
+        /// </summary>
+        public double Tu;
 
-        //значения критерия оптимальности. рассчитывается в Regulator
+        /// <summary>
+        /// значения критерия оптимальности. рассчитывается в Regulator
+        /// </summary>
         public List<double> quality_f;
 
         public bool isSplainAppr;
         public bool isRandomEffect;
 
-        //матрицы для рассчета критерия оптимальности (для теста брать единичные, предусмотреть изменение в процессе работы)
-        //оказывацца зависят от времени
+        
+        /// <summary>
+        /// матрицы для рассчета критерия оптимальности (для теста брать единичные, предусмотреть изменение в процессе работы)
+        ///оказывацца зависят от времени
+        /// </summary>
         List<Matrix> int_Fi;
+        /// <summary>
+        /// матрицы для рассчета критерия оптимальности (для теста брать единичные, предусмотреть изменение в процессе работы)
+        ///оказывацца зависят от времени
+        /// </summary>
         List<Matrix> int_Psi;
         #endregion
 #region свойства
-        //Выходные данные системы y размерности p x 1
+        /// <summary>
+        /// Выходные данные системы y размерности p x 1
+        /// </summary>
         public List<Matrix> y
         {
             get
@@ -103,14 +172,21 @@ namespace neco
         //    }
         //}
 
-        //отношение Tx/Tu. если =1 - синхронная система, если <1 - система с периодической выдачей управляющих воздействий, если >1 - система с периодическим режимом съёма информации.
+        /// <summary>
+        /// отношение Tx/Tu. если =1 - синхронная система, если <1 - система с периодической выдачей управляющих воздействий, если >1 - система с периодическим режимом съёма информации.
+        /// </summary>
         public double s
         {
             get { return this.Tx / this.Tu; }
         }
         #region функции вытаскивания/затаскивания приватных матриц Fi, Psi
-        //Fi
-        //путтеры
+        
+        /// <summary>
+        /// Fi
+        ///путтеры
+        /// </summary>
+        /// <param name="new_Fi"></param>
+        /// <param name="k"></param>
         public void Fi(Matrix new_Fi, int k)
         {
             if (stationarity)
@@ -118,6 +194,12 @@ namespace neco
             else
                 int_Fi[k] = new_Fi;
         }
+
+        /// <summary>
+        /// Fi
+        ///путтеры
+        /// </summary>
+        /// <param name="new_Fi"></param>
         public void Fi(Matrix new_Fi)
         {
             if (stationarity)
@@ -125,11 +207,21 @@ namespace neco
             else
                 throw new InvalidOperationException("Система нестационарна!");
         }
-        //геттеры
+
+        /// <summary>
+        /// геттеры
+        /// </summary>
+        /// <returns></returns>
         public List<Matrix> allFi()
         {
             return int_Fi;
         }
+
+        /// <summary>
+        /// геттеры
+        /// </summary>
+        /// <param name="k"></param>
+        /// <returns></returns>
         public Matrix Fi(int k)
         {
             if (stationarity)
@@ -137,6 +229,10 @@ namespace neco
             else
                 return int_Fi[k];
         }
+        /// <summary>
+        /// геттеры
+        /// </summary>
+        /// <returns></returns>
         public Matrix Fi()
         {
             if (stationarity)
@@ -144,8 +240,13 @@ namespace neco
             else
                 throw new InvalidOperationException("Система нестационарна!");
         }
-        //Psi
-        //путтеры
+        
+        /// <summary>
+        /// Psi
+        /// путтеры
+        /// </summary>
+        /// <param name="new_Psi"></param>
+        /// <param name="k"></param>
         public void Psi(Matrix new_Psi, int k)
         {
             if (stationarity)
@@ -153,6 +254,11 @@ namespace neco
             else
                 int_Psi[k] = new_Psi;
         }
+        /// <summary>
+        /// Psi
+        /// путтеры
+        /// </summary>
+        /// <param name="new_Psi"></param>
         public void Psi(Matrix new_Psi)
         {
             if (stationarity)
@@ -160,11 +266,20 @@ namespace neco
             else
                 throw new InvalidOperationException("Система нестационарна!");
         }
-        //геттеры
+        
+        /// <summary>
+        /// геттеры
+        /// </summary>
+        /// <returns></returns>
         public List<Matrix> allPsi()
         {
             return int_Psi;
         }
+        /// <summary>
+        /// геттеры
+        /// </summary>
+        /// <param name="k"></param>
+        /// <returns></returns>
         public Matrix Psi(int k)
         {
             if (stationarity)
@@ -172,6 +287,10 @@ namespace neco
             else
                 return int_Psi[k];
         }
+        /// <summary>
+        /// геттеры
+        /// </summary>
+        /// <returns></returns>
         public Matrix Psi()
         {
             if (stationarity)
@@ -182,14 +301,26 @@ namespace neco
         #endregion
         #region функции вытаскивания/затаскивания приватных матриц A,B,H.
         //политика такова - даже если дали больше паарметров (вместе со временем, а система стационарна), то вытаскивается что есть
-        //матрица analog_A
-        //геттеры
-        //целиком
+        
+        /// <summary>
+        /// матрица analog_A
+        ///геттеры
+        ///целиком
+        /// </summary>
+        /// <returns></returns>
         public List<List<Matrix>> analog_A()
         {
             return int_analog_A;
         }
-        //нестац.
+        //
+        /// <summary>
+        /// матрица analog_A
+        /// геттеры
+        /// нестац.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public Matrix analog_A(int time, int delay)
         {
             if (!this.stationarity)
@@ -197,7 +328,14 @@ namespace neco
             else
                 return int_analog_A[0][delay];
         }
-        //стац.
+        
+        /// <summary>
+        /// матрица analog_A
+        /// геттеры
+        /// стац.
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public Matrix analog_A(int delay)
         {
             if (this.stationarity)
@@ -205,8 +343,15 @@ namespace neco
             else
                 throw new InvalidOperationException("Система нестационарна!");
         }
-        //путтеры
-        //нестац.
+        
+        /// <summary>
+        /// матрица analog_A
+        /// путтеры
+        /// нестац.
+        /// </summary>
+        /// <param name="new_A"></param>
+        /// <param name="time"></param>
+        /// <param name="delay"></param>
         public void analog_A(Matrix new_A, int time, int delay)
         {
             if (!this.stationarity)
@@ -214,7 +359,14 @@ namespace neco
             else
                 this.int_analog_A[0][delay] = new_A;
         }
-        //стац
+
+        /// <summary>
+        /// матрица analog_A
+        /// путтеры
+        /// стац
+        /// </summary>
+        /// <param name="new_A"></param>
+        /// <param name="delay"></param>
         public void analog_A(Matrix new_A, int delay)
         {
             if (this.stationarity)
@@ -222,14 +374,26 @@ namespace neco
             else
                 throw new InvalidOperationException("Система нестационарна!");
         }
-        //матрица analog_B
-        //геттеры
-        //целиком
+        
+        /// <summary>
+        /// матрица analog_B
+        ///геттеры
+        ///целиком
+        /// </summary>
+        /// <returns></returns>
         public List<List<Matrix>> analog_B()
         {
             return this.int_analog_B;
         }
-        //нестац.
+        
+        /// <summary>
+        /// матрица analog_B
+        /// геттеры
+        /// нестац.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public Matrix analog_B(int time, int delay)
         {
             if (!this.stationarity)
@@ -237,7 +401,14 @@ namespace neco
             else
                 return int_analog_B[0][delay];
         }
-        //стац.
+        
+        /// <summary>
+        /// матрица analog_B
+        /// геттеры
+        /// стац.
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public Matrix analog_B(int delay)
         {
             if (this.stationarity)
@@ -245,8 +416,15 @@ namespace neco
             else
                 throw new InvalidOperationException("Система нестационарна!");
         }
-        //путтеры
-        //нестац.
+        
+        /// <summary>
+        /// матрица analog_B
+        /// путтеры
+        /// нестац.
+        /// </summary>
+        /// <param name="new_B"></param>
+        /// <param name="time"></param>
+        /// <param name="delay"></param>
         public void analog_B(Matrix new_B, int time, int delay)
         {
             if (!this.stationarity)
@@ -254,7 +432,14 @@ namespace neco
             else
                 this.int_analog_B[0][delay] = new_B;
         }
-        //стац
+        
+        /// <summary>
+        /// матрица analog_B
+        /// путтеры
+        /// стац
+        /// </summary>
+        /// <param name="new_B"></param>
+        /// <param name="delay"></param>
         public void analog_B(Matrix new_B, int delay)
         {
             if (this.stationarity)
@@ -263,12 +448,23 @@ namespace neco
                 throw new InvalidOperationException("Система нестационарна!");
         }
 // ----------------------------------------------------------------------------------
-        //матрица A
+        
+        /// <summary>
+        /// матрица A
+        /// </summary>
+        /// <returns></returns>
         public List<List<Matrix>> get_A()
         {
             return this.int_A;
         }
-        //нестац.
+        
+        /// <summary>
+        /// матрица A
+        /// нестац.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public Matrix get_A(int time, int delay)
         {
             if (!this.stationarity)
@@ -276,7 +472,13 @@ namespace neco
             else
                 return int_A[0][delay];
         }
-        //стац.
+        
+        /// <summary>
+        /// //матрица A
+        /// стац.
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public Matrix get_A(int delay)
         {
             if (this.stationarity)
@@ -296,14 +498,26 @@ namespace neco
                     this.int_A.Add(new_A);                
         }
 // ----------------------------------------------------------------------------------
-        //матрица B
-        //геттеры
-        //целиком
+        
+        /// <summary>
+        ///матрица B
+        ///геттеры
+        ///целиком
+        /// </summary>
+        /// <returns></returns>
         public List<List<Matrix>> B()
         {
             return this.int_B;
         }
-        //нестац.
+        
+        /// <summary>
+        /// матрица B
+        ///геттеры
+        ///нестац.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public Matrix B(int time, int delay)
         {
             if (!this.stationarity)
@@ -311,7 +525,14 @@ namespace neco
             else
                 return int_B[0][delay];
         }
-        //стац.
+        
+        /// <summary>
+        /// матрица B
+        /// геттеры
+        /// стац.
+        /// </summary>
+        /// <param name="delay"></param>
+        /// <returns></returns>
         public Matrix B(int delay)
         {
             if (this.stationarity)
@@ -331,14 +552,25 @@ namespace neco
                     this.int_B.Add(new_B);
         }
 // ----------------------------------------------------------------------------------
-        //матрица H
-        //геттеры
-        //целиком
+        
+        /// <summary>
+        /// матрица H
+        ///геттеры
+        ///целиком
+        /// </summary>
+        /// <returns></returns>
         public List<Matrix> allH()
         {
             return int_H;
         }
-        //нестац.
+        
+        /// <summary>
+        /// //матрица H
+        ///геттеры
+        ///нестац.
+        /// </summary>
+        /// <param name="time"></param>
+        /// <returns></returns>
         public Matrix H(int time)
         {
             if (!this.stationarity)
@@ -347,7 +579,13 @@ namespace neco
                 return int_H[0];
 
         }
-        //стац.
+        
+        /// <summary>
+        /// матрица H
+        ///геттеры
+        ///стац.
+        /// </summary>
+        /// <returns></returns>
         public Matrix H()
         {
             if (this.stationarity)
@@ -355,8 +593,14 @@ namespace neco
             else
                 throw new InvalidOperationException("Система нестационарна!");
         }
-        //путтеры
-        //нестац.
+       
+        /// <summary>
+        /// матрица H
+        ///путтеры
+        ///нестац.
+        /// </summary>
+        /// <param name="new_H"></param>
+        /// <param name="time"></param>
         public void H(Matrix new_H, int time)
         {
             if (!this.stationarity)
@@ -364,7 +608,13 @@ namespace neco
             else
                 this.int_H[0] = new_H;
         }
-        //стац
+        
+        /// <summary>
+        /// матрица H
+        ///путтеры
+        ///стац
+        /// </summary>
+        /// <param name="new_H"></param>
         public void H(Matrix new_H)
         {
             if (this.stationarity)
@@ -379,7 +629,10 @@ namespace neco
         public int m { get { return u[0].NoRows; } }
         public int a { get { return L.Count; } }
         public int c { get { return M.Count; } }
-        public int p { get { return int_H[0].NoRows; } }//размерность матрицы H из формулы y = Hx
+        /// <summary>
+        /// размерность матрицы H из формулы y = Hx
+        /// </summary>
+        public int p { get { return int_H[0].NoRows; } }
         //############################################
         public int d { get { return P.Count; } }
         //############################################
@@ -406,51 +659,81 @@ namespace neco
          * 			0-1-1-0-1-1-0-1-1
          * 			нестационарна, синхронна, есть запаздывание по состоянию, нет запаздывания по управлению, полностью управляема, частично управляема, не наблюдаема, детерменирована, с вомущениями
          */
+        /// <summary>
+        /// стационарность
+        /// </summary>
         public Boolean stationarity
         {
             private set { sys_type[0] = value; }
             get { return sys_type[0]; }
         }
+        /// <summary>
+        /// синхронность
+        /// </summary>
         public Boolean synchronism
         {
             private set { sys_type[1] = value; }
             get { return sys_type[1]; }
         }
+        /// <summary>
+        /// запаздываение по состоянию
+        /// </summary>
         public Boolean delay_by_state
         {
             private set { sys_type[2] = value; }
             get { return sys_type[2]; }
         }
+        /// <summary>
+        /// запаздываение по управлению
+        /// </summary>
         public Boolean delay_by_control
         {
             private set { sys_type[3] = value; }
             get { return sys_type[3]; }
         }
+        /// <summary>
+        /// полная управляемость
+        /// </summary>
         public Boolean full_controllability
         {
             set { sys_type[4] = value; }
             get { return sys_type[4]; }
         }
+        /// <summary>
+        /// частичная управляемость
+        /// </summary>
         public Boolean part_controllability
         {
             set { sys_type[5] = value; }
             get { return sys_type[5]; }
         }
+        /// <summary>
+        /// полная наблюдаемость
+        /// </summary>
         public Boolean full_observersability
         {
             set { sys_type[6] = value; }
             get { return sys_type[6]; }
         }
+        /// <summary>
+        /// частичная наблюдаемость
+        /// </summary>
         public Boolean part_observersability
         {
             set { sys_type[7] = value; }
             get { return sys_type[7]; }
         }
+        /// <summary>
+        /// детерменорованность
+        /// </summary>
         public Boolean determinancy
         {
             private set { sys_type[8] = value; }
             get { return sys_type[8]; }
         }
+        /// <summary>
+        /// возмущения
+        /// </summary>
         public Boolean perturbation
         {
             private set { sys_type[9] = value; }

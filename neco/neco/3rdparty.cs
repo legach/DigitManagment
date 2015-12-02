@@ -10,7 +10,13 @@ namespace neco
     //Всякие разные методы для работы
     class _3rdparty
     {
-        //конкатенация матриц горизонтальная
+
+        /// <summary>
+        /// конкатенация матриц горизонтальная
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <returns></returns>
         public static Matrix Concatenate_Horiz(Matrix A, Matrix B)
         {
             Matrix C = new Matrix(A.NoRows, A.NoCols + B.NoCols);
@@ -24,7 +30,12 @@ namespace neco
                 }
             return C;
         }
-        //конкатенация матриц вертикальная
+        /// <summary>
+        /// конкатенация матриц вертикальная
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="B"></param>
+        /// <returns></returns>
         public static Matrix Concatenate_Vert(Matrix A, Matrix B)
         {
             Matrix C = new Matrix(A.NoRows + B.NoRows, A.NoCols);
@@ -38,7 +49,13 @@ namespace neco
                 }
             return C;
         }
-        //обрезание матрицы до заданных размеров
+        /// <summary>
+        /// обрезание матрицы до заданных размеров
+        /// </summary>
+        /// <param name="A"></param>
+        /// <param name="NoRows"></param>
+        /// <param name="NoCols"></param>
+        /// <returns></returns>
         public static Matrix Cut(Matrix A, int NoRows, int NoCols)
         {
             Matrix rez = new Matrix(Math.Min(A.NoRows, NoRows), Math.Min(A.NoCols, NoCols));
@@ -47,14 +64,23 @@ namespace neco
                     rez[i, j] = A[i, j];
             return rez;
         }
-        //расово-верный модуль
+        /// <summary>
+        /// расово-верный модуль
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         public static double mod(double x)
         {
             if (x < 0)
                 x = -x;
             return x;
         }
-        //символ Кронекера
+        /// <summary>
+        /// символ Кронекера
+        /// </summary>
+        /// <param name="symb"></param>
+        /// <param name="original"></param>
+        /// <returns></returns>
         public static int δ(int symb, int original)
         {
             if (symb == original)
@@ -63,7 +89,12 @@ namespace neco
                 return 0;
         }
 
-        //возведение матрицы в целую степень
+        /// <summary>
+        /// возведение матрицы в целую степень
+        /// </summary>
+        /// <param name="M"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
         public static Matrix mPow(Matrix M, int n)
         {
             Matrix res = new Matrix(Matrix.Identity(M.NoRows));
@@ -74,13 +105,22 @@ namespace neco
             return res;
         }
 
-        //факториал числа
+        /// <summary>
+        /// факториал числа
+        /// </summary>
+        /// <param name="i"></param>
+        /// <returns></returns>
         public static double Factorial(double i)
         {
             return ((i <= 1) ? 1 : (i * Factorial(i - 1)));
         }
 
-        //матричная экспонента - переделана методом "удвоения" аргумента
+        /// <summary>
+        /// матричная экспонента - переделана методом "удвоения" аргумента
+        /// </summary>
+        /// <param name="M"></param>
+        /// <param name="element_count"></param>
+        /// <returns></returns>
         public static Matrix mExp(Matrix M, int element_count)
         {
             //поиск максимального числа в матрице
@@ -104,7 +144,12 @@ namespace neco
         }
 
 
-        // Генерация аддитивного Гауссовского белого шума
+        /// <summary>
+        ///  Генерация аддитивного Гауссовского белого шума
+        /// </summary>
+        /// <param name="column"></param>
+        /// <param name="row"></param>
+        /// <returns></returns>
         public static Matrix AWGN_generator(int column, int row)
         {
             Matrix result = new Matrix(row, column);
