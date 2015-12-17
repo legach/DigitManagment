@@ -33,3 +33,5 @@ C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.MainNec
 C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.Properties.Resources.resources
 C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.SysInfo.resources
 C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.csproj.GenerateResource.Cache
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.exe
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.pdb
