@@ -35,3 +35,15 @@ C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.SysInfo
 C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.csproj.GenerateResource.Cache
 D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.exe
 D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.pdb
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.csprojResolveAssemblyReference.cache
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.CreateF1.resources
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.MainNeco.resources
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.Properties.Resources.resources
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.SysInfo.resources
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.csproj.GenerateResource.Cache
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\bin\Debug\neco.exe
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\bin\Debug\neco.pdb
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\bin\Debug\GraphLib.dll
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\bin\Debug\MatrixLibrary.dll
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\bin\Debug\ZedGraph.dll
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\bin\Debug\ZedGraph.xml
