@@ -6,6 +6,7 @@ using System.Text;
 using System.Drawing;
 using MatrixLibrary;
 using System.Windows.Forms;
+using ZedGraph;
 
 namespace neco
 {
@@ -132,7 +133,7 @@ namespace neco
         //Ручка, которой рисуем график
         Pen PPen;
         //координаты около курсора
-        Label CoordL;
+        System.Windows.Forms.Label CoordL;
 #endregion
         //конструктор
         public plotter(Point newLocation, Size newSize, Color C, List<Matrix> Arr, int LineInArrNum) :base()
@@ -147,7 +148,7 @@ namespace neco
             //графика
             PPen = new Pen(C, 2);
             //элементы формы
-            CoordL = new Label();
+            CoordL = new System.Windows.Forms.Label();
             CoordL.Visible = false;
             CoordL.BackColor = Color.LightGoldenrodYellow;
             CoordL.AutoSize = true;
@@ -170,7 +171,7 @@ namespace neco
             //графика
             PPen = new Pen(C, 2);
             //элементы формы
-            CoordL = new Label();
+            CoordL = new System.Windows.Forms.Label();
             CoordL.Visible = false;
             CoordL.BackColor = Color.LightGoldenrodYellow;
             CoordL.AutoSize = true;
@@ -239,8 +240,12 @@ namespace neco
                 (CreateGraphics()).Clear(this.BackColor);
                 //(CreateGraphics()).DrawBizies(PPen, VisibleFPoints);
                 (CreateGraphics()).DrawLines(PPen, VisibleFPoints);
+
             }
         }
+
+        
+
         //Заливка какого-либо массива отсчетов из sys сюда
         public void LoadPointsFromSys(List<Matrix> A, int GraphNum)
         {
@@ -293,8 +298,8 @@ namespace neco
         }
         #endregion
         //Всякие надписи
-        Label Y;
-        Label[] X;
+        System.Windows.Forms.Label Y;
+        System.Windows.Forms.Label[] X;
         public StackedPlotters(Point newLocation, Size newPSize, List<Matrix> Arr, Color C) : base()
         {
             Location = newLocation;
@@ -314,17 +319,17 @@ namespace neco
                 this.BringToFront();
             }
             //Метки
-            Y = new Label();
+            Y = new System.Windows.Forms.Label();
             Y.Text = "Y";
             Y.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             Y.Location = new Point(Convert.ToInt32(0.75 * WidthOffset), 0);
             Y.AutoSize = true;
             this.Controls.Add(Y);
             Y.SendToBack();
-            X = new Label[this.Plot.Length];
+            X = new System.Windows.Forms.Label[this.Plot.Length];
             for (int i = 0; i < X.Length; i++)
             {
-                X[i] = new Label();
+                X[i] = new System.Windows.Forms.Label();
                 X[i].Text = "X";
                 X[i].Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
                 X[i].Location = new Point(Width - WidthOffset / 2 - X[i].Width, Plot[i].Location.Y + Plot[i].Height + Convert.ToInt32(GridPen.Width));
@@ -413,7 +418,7 @@ namespace neco
         /// <summary>
         /// метки для плоттеров
         /// </summary>
-        public Label[] PanesLabels;
+        public System.Windows.Forms.Label[] PanesLabels;
         
         /// <summary>
         /// открывашка файлов json и инициализирует объект ESystem им.
@@ -445,10 +450,10 @@ namespace neco
         public void InitPlotters(int PlottersCount, Point LeftTopCorner, ESystem sys)
         {
             //метки панелей
-            PanesLabels = new Label[PlottersCount + 1];
+            PanesLabels = new System.Windows.Forms.Label[PlottersCount + 1];
             for (int k = 0; k < PlottersCount + 1; k++)
             {
-                PanesLabels[k] = new Label();
+                PanesLabels[k] = new System.Windows.Forms.Label();
                 PanesLabels[k].Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             }
             PanesLabels[0].Text = "X";
@@ -514,17 +519,17 @@ namespace neco
     /// </summary>
     class MatrixDrawer : GroupBox
     {
-        Label[,] Vals;
+        System.Windows.Forms.Label[,] Vals;
         int RoundCount;
 
         public MatrixDrawer(Matrix M)
         {
             RoundCount = 2;
-            Vals = new Label[M.NoRows, M.NoCols];
+            Vals = new System.Windows.Forms.Label[M.NoRows, M.NoCols];
             for (int i = 0; i < M.NoRows; i++)
                 for (int j = 0; j < M.NoCols; j++)
                 {
-                    Vals[i, j] = new Label();
+                    Vals[i, j] = new System.Windows.Forms.Label();
                     Vals[i, j].Text = Math.Round(M[i, j], RoundCount).ToString("N3");
                     //Vals[i, j].Text = M[i, j].ToString();
                     Vals[i, j].AutoSize = true;
@@ -544,11 +549,11 @@ namespace neco
             //чистка
             this.Controls.Clear();
             //загрузка заново
-            Vals = new Label[M.NoRows, M.NoCols];
+            Vals = new System.Windows.Forms.Label[M.NoRows, M.NoCols];
             for (int i = 0; i < M.NoRows; i++)
                 for (int j = 0; j < M.NoCols; j++)
                 {
-                    Vals[i, j] = new Label();
+                    Vals[i, j] = new System.Windows.Forms.Label();
                     Vals[i, j].Text = Math.Round(M[i, j], RoundCount).ToString("N3");
                     //Vals[i, j].Text = M[i, j].ToString();
                     Vals[i, j].AutoSize = true;

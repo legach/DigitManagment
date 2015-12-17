@@ -7,20 +7,18 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using MatrixLibrary;
-
-
 namespace neco
 {
     partial class CreateF1 : Form
     {
         List<TBMatrixDrawer> MatrixBoxListA;
-        List<Label> LabelListA, LabelListTau;
+        List<System.Windows.Forms.Label> LabelListA, LabelListTau;
         List<TextBox> TextBoxListTau;
         List<TBMatrixDrawer> MatrixBoxListB;
-        List<Label> LabelListB, LabelListTeta;
+        List<System.Windows.Forms.Label> LabelListB, LabelListTeta;
         List<TextBox> TextBoxListTeta;
         List<TBMatrixDrawer> MatrixBoxListH;
-        List<Label> LabelListH;
+        List<System.Windows.Forms.Label> LabelListH;
         public static ESystem sys1;
         int m, n, p, a, c;
         double Tx, Tu;
@@ -60,13 +58,13 @@ namespace neco
 
 
                 MatrixBoxListA = new List<TBMatrixDrawer>();
-                LabelListA = new List<Label>();
-                LabelListTau = new List<Label>();
+                LabelListA = new List<System.Windows.Forms.Label>();
+                LabelListTau = new List<System.Windows.Forms.Label>();
                 TextBoxListTau = new List<TextBox>();
 
                 for (int i = 0; i <= a; i++)
                 {
-                    LabelListA.Add(new Label());
+                    LabelListA.Add(new System.Windows.Forms.Label());
                     LabelListA[i].Text = "A"+i+": ";
                     LabelListA[i].Location = new Point(locationX, locationY);
                     splitContainer1.Panel2.Controls.Add(LabelListA[i]);
@@ -77,7 +75,7 @@ namespace neco
                     
                     if (i != 0)
                     {
-                        LabelListTau.Add(new Label());
+                        LabelListTau.Add(new System.Windows.Forms.Label());
                         LabelListTau[i-1].Text = "Tau" + i + ": ";
                         LabelListTau[i-1].Location = new Point(locationX, locationY + MatrixBoxListA[i].Size.Height + 40);
                         LabelListTau[i - 1].Size = new Size(50, 25);
@@ -99,13 +97,13 @@ namespace neco
 
 
                 MatrixBoxListB = new List<TBMatrixDrawer>();
-                LabelListB = new List<Label>();
-                LabelListTeta = new List<Label>();
+                LabelListB = new List<System.Windows.Forms.Label>();
+                LabelListTeta = new List<System.Windows.Forms.Label>();
                 TextBoxListTeta = new List<TextBox>();
 
                 for (int i = 0; i <= c; i++)
                 {
-                    LabelListB.Add(new Label());
+                    LabelListB.Add(new System.Windows.Forms.Label());
                     LabelListB[i].Text = "B"+i+": ";
                     LabelListB[i].Location = new Point(locationX, locationY);
                     splitContainer1.Panel2.Controls.Add(LabelListB[i]);
@@ -116,7 +114,7 @@ namespace neco
                     
                     if (i != 0)
                     {
-                        LabelListTeta.Add(new Label());
+                        LabelListTeta.Add(new System.Windows.Forms.Label());
                         LabelListTeta[i-1].Text = "Teta" + i + ": ";
                         LabelListTeta[i-1].Location = new Point(locationX, locationY + MatrixBoxListB[i].Size.Height + 40);
                         LabelListTeta[i - 1].Size = new Size(50, 25);
@@ -139,9 +137,9 @@ namespace neco
 
 
                 MatrixBoxListH = new List<TBMatrixDrawer>();
-                LabelListH = new List<Label>();
+                LabelListH = new List<System.Windows.Forms.Label>();
 
-                LabelListH.Add(new Label());
+                LabelListH.Add(new System.Windows.Forms.Label());
                 LabelListH[0].Text = "H: ";
                 LabelListH[0].Location = new Point(locationX, locationY);
                 splitContainer1.Panel2.Controls.Add(LabelListH[0]);
