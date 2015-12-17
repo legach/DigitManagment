@@ -1,2 +1,4 @@
 *.exe
 neco/neco/obj/x86/Debug/neco.csproj.FileListAbsolute.txt
+*.suo
+*.cache
