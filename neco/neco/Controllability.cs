@@ -13,14 +13,22 @@ namespace neco
         public static Matrix temp_GR;
         public static Matrix temp_G_;
 
-        private Controllability() { ;}
-        //конструктор принимает system_state и инициализирует класс ниже
+
+        /// <summary>
+        /// конструктор принимает system_state и инициализирует класс ниже
+        /// </summary>
+        /// <param name="system_state"></param>
         private Controllability(ref State system_state)
         {
-            ;
+            
         }
-        //главная функция рассчета управляемости системы. возвращает нашелся ли метод на тип системы, описанной в sysytem_state
-        //!!!Конструкторы не описаны - АБСТРАКТНЫЙ КОД!
+        
+        /// <summary>
+        /// главная функция рассчета управляемости системы. возвращает нашелся ли метод на тип системы, описанной в sysytem_state
+        ///!!!Конструкторы не описаны - АБСТРАКТНЫЙ КОД!
+        /// </summary>
+        /// <param name="system_state"></param>
+        /// <returns></returns>
         public static bool IsSystemControllability(ref State system_state)
         {
             //была ли определена управляемоть
@@ -48,17 +56,7 @@ namespace neco
                         flag = true;
                     }
                 }
-//--------------------------------------------------------------------------------------------------------------------------------------
-//            (___)                                         |
-//            (o o)                                         |
-//      /------\ /   (__)                         (__)      |  
-//     /    ____O    (oo)                         (oo)      |
-//    |   / /----\----\/                   /-------\/       |
-//    /\oo===|  /    ||                   / |     ||        |
-//   | ||   *||^-----||                  *  OO----OO        |
-//   *  ^^   ^^      ^^                                     |
-//                                                          |
-//--------------------------------------------------------------------------------------------------------------------------------------
+
                 else //система стационарна
                 {
                     if (system_state.delay_by_state && system_state.delay_by_control)   //есть запаздывание по состоянию и по управлению
@@ -85,7 +83,11 @@ namespace neco
             return flag;
         }
 
-        //Управляемость стац системы с обоими запаздываниями
+        
+        /// <summary>
+        /// Управляемость стац системы с обоими запаздываниями
+        /// </summary>
+        /// <param name="system_state"></param>
         private void IsContr_Perm_XU(ref State system_state)
         {
             // реализация на основе нестационарной системы
@@ -96,21 +98,32 @@ namespace neco
             //system_state.part_controllability = NonPermState.part_controllability;
         }
 
-        //Управляемость стац. системы с запаздыванием по состоянию
+        /// <summary>
+        /// Управляемость стац. системы с запаздыванием по состоянию
+        /// </summary>
+        /// <param name="system_state"></param>
         private void IsContr_Perm_X(ref State system_state)
         {
             //реализация на основе общего случая по задержкам
             this.IsContr_Perm_XU(ref system_state);
         }
 
-        //Управляемость стац. системы с запаздыванием по управлению
+        /// <summary>
+        /// Управляемость стац. системы с запаздыванием по управлению
+        /// </summary>
+        /// <param name="system_state"></param>
         private void IsContr_Perm_U(ref State system_state)
         {
             //реализация на основе общего случая по задержкам
             this.IsContr_Perm_XU(ref system_state);
         }
 
-        //Усправляемость нестац системы с обоими запаздываниями
+        /// <summary>
+        /// Усправляемость нестац системы с обоими запаздываниями
+        /// </summary>
+        /// <param name="system_state"></param>
+        /// <param name="j"></param>
+        /// <returns></returns>
         private bool condition_1(State system_state, int j)
         {
             for (int s = 1; s < system_state.c; s++)
@@ -122,6 +135,8 @@ namespace neco
             }
             return true;
         }
+
+
         private void IsContr_NonPerm_XU(ref State system_state)
         {
             int a = system_state.a;
@@ -265,19 +280,31 @@ namespace neco
         //        system_state.full_controllability = false;
         //}
 
-        //Управляемость нестац. системы с запаздыванием по состоянию
+        /// <summary>
+        /// Управляемость нестац. системы с запаздыванием по состоянию
+        /// </summary>
+        /// <param name="system_state"></param>
         private void IsContr_NonPerm_X(ref State system_state)
         {
             throw new NotImplementedException();
         }
 
-        //Управляемость нестац. системы с запаздыванием по управлению
+        /// <summary>
+        /// Управляемость нестац. системы с запаздыванием по управлению
+        /// </summary>
+        /// <param name="system_state"></param>
         private void IsContr_NonPerm_U(ref State system_state)
         {
             throw new NotImplementedException();
         }
 
-        //рассчет матрицы формула 2.8 стр. 36                                           РЕКУРСИЯ, НЕ ОТЛАЖЕНО
+        /// <summary>
+        /// рассчет матрицы формула 2.8 стр. 36                                           РЕКУРСИЯ, НЕ ОТЛАЖЕНО
+        /// </summary>
+        /// <param name="sys_state"></param>
+        /// <param name="N"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
         static Matrix F(ref State sys_state, int N, int k)
         {
             if (N == k)
@@ -295,8 +322,14 @@ namespace neco
                 return tmp;
             }
         }
-        //рассчет всего для Qa
-        //формула 2.12, стр 37 - дикая неразбериха с индексами. Циклы перенесены с формулы 2.9
+        
+        /// <summary>
+        /// рассчет всего для Qa
+        ///формула 2.12, стр 37 - дикая неразбериха с индексами. Циклы перенесены с формулы 2.9
+        /// </summary>
+        /// <param name="sys_state"></param>
+        /// <param name="N"></param>
+        /// <returns></returns>
         static Matrix Qr(ref State sys_state, int N)//k0 = 0
         {
             Matrix rez = F(ref sys_state, N, 0);
@@ -316,7 +349,13 @@ namespace neco
             }
             return rez;
         }
-        //формула 2.21, стр. 40
+
+        /// <summary>
+        /// формула 2.21, стр. 40
+        /// </summary>
+        /// <param name="sys_state"></param>
+        /// <param name="N"></param>
+        /// <returns></returns>
         static Matrix Qa(ref State sys_state, int N)//k0 = 0
         {
             Matrix rez = Qr(ref sys_state, N - sys_state.L[sys_state.a-1]);
@@ -326,8 +365,13 @@ namespace neco
             }
             return rez;
         }
-        //рассчет всего для GammaA
-        //формула 2.3, стр.44 - дикая неразбериха с индексами. Циклы перенесены с формулы 2.34
+        /// <summary>
+        /// рассчет всего для GammaA
+        ///формула 2.3, стр.44 - дикая неразбериха с индексами. Циклы перенесены с формулы 2.34
+        /// </summary>
+        /// <param name="sys_state"></param>
+        /// <param name="N"></param>
+        /// <returns></returns>
         static Matrix Gamma(ref State sys_state, int N)
         {
             Matrix rez = F(ref sys_state, N, 1) * sys_state.B(0, sys_state.c - 1);
@@ -347,7 +391,12 @@ namespace neco
             }
             return rez;
         }
-        //формула 2.67, стр.51
+        /// <summary>
+        /// формула 2.67, стр.51
+        /// </summary>
+        /// <param name="sys_state"></param>
+        /// <param name="N"></param>
+        /// <returns></returns>
         static Matrix GammaA(ref State sys_state, int N)
         {
             Matrix rez = Gamma(ref sys_state, N);
@@ -357,8 +406,13 @@ namespace neco
             }
             return rez;
         }
-        //рассчет всего для _G
+        /// <summary>
+        /// рассчет всего для _G
         //формула 2.38, стр.45 - дикая неразбериха с индексами. Циклы перенесены с формулы 2.34
+        /// </summary>
+        /// <param name="sys_state"></param>
+        /// <param name="N"></param>
+        /// <returns></returns>
         static Matrix Gr(ref State sys_state, int N)
         {
             Matrix rez = new Matrix(sys_state.n,sys_state.n);
@@ -378,7 +432,13 @@ namespace neco
 
             return rez;
         }
-        //формула 2.22, стр.40 - Здесь N и l - 2 ОТдельных паарметра
+        /// <summary>
+        /// формула 2.22, стр.40 - Здесь N и l - 2 ОТдельных паарметра
+        /// </summary>
+        /// <param name="sys_state"></param>
+        /// <param name="N"></param>
+        /// <param name="l"></param>
+        /// <returns></returns>
         static Matrix G(ref State sys_state, int N, int l)
         {
             if (N == l)
@@ -387,7 +447,12 @@ namespace neco
             else
                 return _3rdparty.Concatenate_Horiz(Gr(ref sys_state, N-l), new Matrix(sys_state.n, sys_state.m * l));
         }
-        //формула 2.23, стр.40
+        /// <summary>
+        /// формула 2.23, стр.40
+        /// </summary>
+        /// <param name="sys_state"></param>
+        /// <param name="N"></param>
+        /// <returns></returns>
         static Matrix Ga(ref State sys_state, int N)
         {
             Matrix rez = G(ref sys_state, N, sys_state.L[sys_state.a - 1]);
@@ -395,7 +460,12 @@ namespace neco
                 rez = _3rdparty.Concatenate_Vert(rez, G(ref sys_state, N - i, i));//не проверены размерности сливания. но это всплывет если что сразу.
             return rez;
         }
-        //формулы нет, стр.52
+        /// <summary>
+        /// формулы нет, стр.52
+        /// </summary>
+        /// <param name="sys_state"></param>
+        /// <param name="N"></param>
+        /// <returns></returns>
         static Matrix _G(ref State sys_state, int N)
         {
             return _3rdparty.Cut(Ga(ref sys_state, N), sys_state.n * (sys_state.L[sys_state.a - 1] + 1), sys_state.m * (N - sys_state.M[sys_state.c - 1]));

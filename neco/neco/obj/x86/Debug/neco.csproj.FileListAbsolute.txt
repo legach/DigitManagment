@@ -21,3 +21,17 @@ C:\Users\Антон\Downloads\neco\neco\obj\x86\Debug\neco.Properties.Resources.
 C:\Users\Антон\Downloads\neco\neco\obj\x86\Debug\neco.SysInfo.resources
 C:\Users\Антон\Downloads\neco\neco\obj\x86\Debug\neco.csproj.GenerateResource.Cache
 C:\Users\Антон\Downloads\neco\neco\obj\x86\Debug\neco.CreateF1.resources
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.exe
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.pdb
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\bin\Debug\neco.exe
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\bin\Debug\neco.pdb
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\bin\Debug\GraphLib.dll
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\bin\Debug\MatrixLibrary.dll
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.csprojResolveAssemblyReference.cache
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.CreateF1.resources
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.MainNeco.resources
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.Properties.Resources.resources
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.SysInfo.resources
+C:\Users\sidorenko\Documents\DigitManagment\neco\neco\obj\x86\Debug\neco.csproj.GenerateResource.Cache
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.exe
+D:\Visual Studio 2013\Projects\DigitManagment\neco\neco\obj\x86\Debug\neco.pdb
