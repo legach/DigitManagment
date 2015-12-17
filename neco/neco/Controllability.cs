@@ -143,12 +143,13 @@ namespace neco
             int c = system_state.c;
             int n = system_state.n;
             int m = system_state.m;
-            int La = system_state.L[system_state.a - 1];
-            int Mc = system_state.M[system_state.c - 1];
+            int La = system_state.L[system_state.a - 1];//последяя задержка по состоянию
+            int Mc = system_state.M[system_state.c - 1];//последняя задержка по управлению
             int nu = n * (La + 1);
             int size_i = La + 1;
             int size_j = n * (La + 1) + Mc;
             Matrix res = new Matrix(n, m);
+            //Список всех необходимых выржений дальше
             List<List<Matrix>> array_V = new List<List<Matrix>>();
             // Забиваем нулями
             for (int i = 0; i < size_i; i++)
@@ -163,7 +164,7 @@ namespace neco
 
             for (int j = 0; j < size_j; j++)
             {
-                for (int i = 0; i < size_i; i++)    
+                for (int i = 0; i < size_i; i++)
                 {
                     // Условие 1
                     if (i >= 0 && i <= La - 1 && j == 0)
@@ -215,12 +216,14 @@ namespace neco
                 }
             }
 
+            //Vr определяетс по выражениям (2.121) и (2.120).
             Matrix Vr = array_V[(La + 1) - 1][0];
             for (int i = 1; i <= nu + Mc - 1; i++)
             {
                 Vr = _3rdparty.Concatenate_Horiz(Vr, array_V[(La + 1) - 1][i]);
             }
 
+            //Va определена как (2.127)
             Matrix Va = array_V[0][0];
             for (int j = 1; j < n * (La + 1); j++)
             {
@@ -235,14 +238,17 @@ namespace neco
                 }
                 Va = _3rdparty.Concatenate_Vert(Va, tmp);
             }
-            if (Matrix.Rank(Va) == n * (La + 1))
+
+
+            //Проверка условий
+            if (Matrix.Rank(Va) == n * (La + 1))//(2.126)
             {
                 system_state.full_controllability = true;
             }
-            else 
+            else
             {
                 system_state.full_controllability = false;
-                if (Matrix.Rank(Vr) == n)
+                if (Matrix.Rank(Vr) == n)//(2.122)
                 {
                     system_state.part_controllability = true;
                 }
@@ -255,16 +261,17 @@ namespace neco
             G_ = Va;
         }
 
-        
-        ////Усправляемость нестац системы с обоими запаздываниями
+
+        //Усправляемость нестац системы с обоими запаздываниями
         //private void IsContr_NonPerm_XU(ref State system_state)
         //{
         //    //больше брать нельзя из-за F
-        //    int N = system_state.L[system_state.a-1];//+k0\
+        //    int N = system_state.L[system_state.a - 1];//+k0\
         //    //условие относительной управляемости 2.61 стр.50
         //    GR = Gr(ref system_state, N);
         //    G_ = _G(ref system_state, N);
-        //    temp_GR = _3rdparty.Concatenate_Horiz(_3rdparty.Concatenate_Horiz(G(ref system_state, N, 0), Qr(ref system_state, N)), Gamma(ref system_state, N));
+        //    var tempGrQr = _3rdparty.Concatenate_Horiz(G(ref system_state, N, 0), Qr(ref system_state, N));
+        //    temp_GR = _3rdparty.Concatenate_Horiz(tempGrQr, Gamma(ref system_state, N));
         //    if (Matrix.Rank(Gr(ref system_state, N).toArray) == Matrix.Rank(_3rdparty.Concatenate_Horiz(_3rdparty.Concatenate_Horiz(G(ref system_state, N, 0), Qr(ref system_state, N)), Gamma(ref system_state, N))))
         //        system_state.part_controllability = true;
         //    else

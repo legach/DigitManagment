@@ -625,9 +625,21 @@ namespace neco
         #endregion
         #endregion
 #region размерности векторов и матриц
+        /// <summary>
+        /// количество строк отсчета вектора состояний x
+        /// </summary>
         public int n { get { return x[0].NoRows; } }
+        /// <summary>
+        /// количество строк отсчета вектора управлений u
+        /// </summary>
         public int m { get { return u[0].NoRows; } }
+        /// <summary>
+        /// количество дискретных задержек по состоянию(L.count)
+        /// </summary>
         public int a { get { return L.Count; } }
+        /// <summary>
+        /// количество дискретных задержек по управлению(M.count)
+        /// </summary>
         public int c { get { return M.Count; } }
         /// <summary>
         /// размерность матрицы H из формулы y = Hx
