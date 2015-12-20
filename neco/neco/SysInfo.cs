@@ -346,10 +346,10 @@ namespace neco
             {
                 this.UniversalMatrixBox.ReloadMatrix(DownloadedForFall);
                 UniversalMatrixBox.Visible = true;
-                if(this.Size.Width < UniversalMatrixBox.Location.X + UniversalMatrixBox.Size.Width || this.Size.Height < UniversalMatrixBox.Location.Y + UniversalMatrixBox.Size.Height)
-                    this.Size = new Size(UniversalMatrixBox.Location) + UniversalMatrixBox.Size + new Size(10,30);
-                if (UniversalMatrixBox.Location.X + UniversalMatrixBox.Size.Width < 450 && UniversalMatrixBox.Location.Y + UniversalMatrixBox.Size.Height <= 200)
-                    this.Size = new Size(450, 200);
+                //if(this.Size.Width < UniversalMatrixBox.Location.X + UniversalMatrixBox.Size.Width || this.Size.Height < UniversalMatrixBox.Location.Y + UniversalMatrixBox.Size.Height)
+                //    this.Size = new Size(UniversalMatrixBox.Location) + UniversalMatrixBox.Size + new Size(10,30);
+                //if (UniversalMatrixBox.Location.X + UniversalMatrixBox.Size.Width < 450 && UniversalMatrixBox.Location.Y + UniversalMatrixBox.Size.Height <= 200)
+                //    this.Size = new Size(450, 200);
             }
 
         }

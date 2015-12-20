@@ -456,7 +456,7 @@ namespace neco
         {
             if (N == l)
                 return Gr(ref sys_state, N - l);
-                // Вызов от таких параметров не имеет смысла, конкатенация выполняется не верно.
+            // Вызов от таких параметров не имеет смысла, конкатенация выполняется не верно.
             else
                 return _3rdparty.Concatenate_Horiz(Gr(ref sys_state, N-l), new Matrix(sys_state.n, sys_state.m * l));
         }
