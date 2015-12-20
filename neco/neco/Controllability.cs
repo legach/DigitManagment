@@ -119,7 +119,7 @@ namespace neco
         }
 
         /// <summary>
-        /// Усправляемость нестац системы с обоими запаздываниями
+        /// Условие проверки на существование задержки по управлению в массиве. (j == system_state.M[s] + 1)
         /// </summary>
         /// <param name="system_state"></param>
         /// <param name="j"></param>
@@ -136,7 +136,10 @@ namespace neco
             return true;
         }
 
-
+        /// <summary>
+        /// Усправляемость нестац системы с обоими запаздываниями
+        /// </summary>
+        /// <param name="system_state"></param>
         private void IsContr_NonPerm_XU(ref State system_state)
         {
             int a = system_state.a;
@@ -293,7 +296,8 @@ namespace neco
         /// <param name="system_state"></param>
         private void IsContr_NonPerm_X(ref State system_state)
         {
-            throw new NotImplementedException();
+            IsContr_NonPerm_XU(ref system_state);
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -302,7 +306,8 @@ namespace neco
         /// <param name="system_state"></param>
         private void IsContr_NonPerm_U(ref State system_state)
         {
-            throw new NotImplementedException();
+            IsContr_NonPerm_XU(ref system_state);
+            //throw new NotImplementedException();
         }
 
         /// <summary>
@@ -331,7 +336,7 @@ namespace neco
         }
         
         /// <summary>
-        /// рассчет всего для Qa
+        /// рассчет всего для Qa Qr(N; k0)
         ///формула 2.12, стр 37 - дикая неразбериха с индексами. Циклы перенесены с формулы 2.9
         /// </summary>
         /// <param name="sys_state"></param>
@@ -358,7 +363,7 @@ namespace neco
         }
 
         /// <summary>
-        /// формула 2.21, стр. 40
+        /// формула 2.21, стр. 40 Qa(N; k0)
         /// </summary>
         /// <param name="sys_state"></param>
         /// <param name="N"></param>
@@ -373,8 +378,8 @@ namespace neco
             return rez;
         }
         /// <summary>
-        /// рассчет всего для GammaA
-        ///формула 2.3, стр.44 - дикая неразбериха с индексами. Циклы перенесены с формулы 2.34
+        /// рассчет всего для GammaA Г(N; k0)
+        ///формула 2.37, стр.44 - дикая неразбериха с индексами. Циклы перенесены с формулы 2.34
         /// </summary>
         /// <param name="sys_state"></param>
         /// <param name="N"></param>
@@ -399,7 +404,7 @@ namespace neco
             return rez;
         }
         /// <summary>
-        /// формула 2.67, стр.51
+        /// формула 2.67, стр.51 Гa(N; k0)
         /// </summary>
         /// <param name="sys_state"></param>
         /// <param name="N"></param>
@@ -413,12 +418,13 @@ namespace neco
             }
             return rez;
         }
+
         /// <summary>
-        /// рассчет всего для _G
-        //формула 2.38, стр.45 - дикая неразбериха с индексами. Циклы перенесены с формулы 2.34
+        /// рассчет всего для G Gr(N; k0)
+        ///формула 2.38, стр.45 - дикая неразбериха с индексами. Циклы перенесены с формулы 2.34
         /// </summary>
         /// <param name="sys_state"></param>
-        /// <param name="N"></param>
+        /// <param name="N">N</param>
         /// <returns></returns>
         static Matrix Gr(ref State sys_state, int N)
         {
@@ -440,11 +446,11 @@ namespace neco
             return rez;
         }
         /// <summary>
-        /// формула 2.22, стр.40 - Здесь N и l - 2 ОТдельных паарметра
+        /// формула 2.22, стр.40 - Здесь N и l - 2 ОТдельных паарметра. G(N - l; k0)
         /// </summary>
         /// <param name="sys_state"></param>
-        /// <param name="N"></param>
-        /// <param name="l"></param>
+        /// <param name="N">N</param>
+        /// <param name="l">l</param>
         /// <returns></returns>
         static Matrix G(ref State sys_state, int N, int l)
         {
@@ -455,10 +461,10 @@ namespace neco
                 return _3rdparty.Concatenate_Horiz(Gr(ref sys_state, N-l), new Matrix(sys_state.n, sys_state.m * l));
         }
         /// <summary>
-        /// формула 2.23, стр.40
+        /// формула 2.23, стр.40 Ga(N; k0)
         /// </summary>
         /// <param name="sys_state"></param>
-        /// <param name="N"></param>
+        /// <param name="N">N</param>
         /// <returns></returns>
         static Matrix Ga(ref State sys_state, int N)
         {
