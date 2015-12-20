@@ -28,16 +28,15 @@ namespace neco
         int d { get { return P.Count; } }
         int p { get { return y[0].NoRows; } }
 
-        private Observability(ref State system_state) { 
-            H = new List<List<Matrix>>();
-            H.Add(system_state.allH());
+        private Observability(ref State system_state) {
+            H = new List<List<Matrix>> {system_state.allH()};
             P = new List<int>();
             //P.Add(0);
             }
         public static bool IsSystemObservability(ref State system_state, int k0 = 0)
         {
-            bool result = false;
-            int tempResult = 0;
+            bool result;
+            int tempResult;
             Observability node = new Observability(ref system_state);
 
             if (!system_state.stationarity)     //система не стационарная p.55
@@ -65,7 +64,6 @@ namespace neco
                         case 2:
                             system_state.part_observersability = true;
                             break;
-                        default: break;
                     }
                 }
 
@@ -95,7 +93,6 @@ namespace neco
                         case 2:
                             system_state.part_observersability = true;
                             break;
-                        default: break;
                     }
                 }
             }
@@ -135,9 +132,9 @@ namespace neco
         {
             if (l == k || l < k)
             {
-                Matrix In = new Matrix(n, n);
-                for (int i = 0; i < n; i++)
-                    for (int j = 0; j < n; j++)
+                var In = new Matrix(n, n);
+                for (var i = 0; i < n; i++)
+                    for (var j = 0; j < n; j++)
                         if (i == j)
                         {
                             In[i, j] = 1;
@@ -147,8 +144,8 @@ namespace neco
             }
             else
             {
-                Matrix res = A[l - 1][0];
-                for (int i = l - 2; i >= k; i--)
+                var res = A[l - 1][0];
+                for (var i = l - 2; i >= k; i--)
                 {
                     res = res * A[i][0];
                 }
@@ -161,9 +158,9 @@ namespace neco
         {
             try
             {
-                int dl = d;
+                var dl = d;
 
-                for (int s = 0; s < d; s++)
+                for (var s = 0; s < d; s++)
                 {
                     if (((l >= k0 + P[s]) && (l <= k0 + P[s + 1] - 1)) || ((l <= k0 + P[s]) && (l >= k0 + P[s + 1] - 1)))
                     {
@@ -175,45 +172,43 @@ namespace neco
                     }
                 }
 
-                Matrix res = H[k0][0];
+                var res = H[k0][0];
 
-                Matrix mx1, mx2, mx3, mx4;
+                var mx1 = H[l][0] * Function_F(l - P[0], k0);
 
-                mx1 = H[l][0] * Function_F(l - P[0], k0);
-
-                for (int i = 1; i < dl; i++)
+                for (var i = 1; i < dl; i++)
                 {
                     mx1 += H[l][i] * Function_F(l - P[i], k0);
                 }
 
-                res = neco._3rdparty.Concatenate_Vert(res, mx1);
+                res = _3rdparty.Concatenate_Vert(res, mx1);
 
-                mx2 = H[k0 + P[d - 2]][0] * Function_F(k0 + P[d - 1] + P[0] - 1, k0);
+                var mx2 = H[k0 + P[d - 2]][0] * Function_F(k0 + P[d - 1] + P[0] - 1, k0);
 
-                for (int i = 1; i < d - 1; i++)
+                for (var i = 1; i < d - 1; i++)
                 {
                     mx2 += H[k0 + P[d - 2]][i] * Function_F(k0 + P[d - 1] + P[i] - 1, k0);
                 }
 
-                res = neco._3rdparty.Concatenate_Vert(res, mx2);
+                res = _3rdparty.Concatenate_Vert(res, mx2);
 
-                mx3 = H[k0 + P[d - 1]][0] * Function_F(k0 + P[d - 1] + P[0], k0);
+                var mx3 = H[k0 + P[d - 1]][0] * Function_F(k0 + P[d - 1] + P[0], k0);
 
-                for (int i = 1; i < d; i++)
+                for (var i = 1; i < d; i++)
                 {
                     mx3 += H[k0 + P[d - 1]][i] * Function_F(k0 + P[d - 1] + P[i], k0);
                 }
 
-                res = neco._3rdparty.Concatenate_Vert(res, mx3);
+                res = _3rdparty.Concatenate_Vert(res, mx3);
 
-                mx4 = H[N][0] * Function_F(N - P[0], k0);
+                var mx4 = H[N][0] * Function_F(N - P[0], k0);
 
-                for (int i = 1; i < d; i++)
+                for (var i = 1; i < d; i++)
                 {
                     mx4 = H[N][i] * Function_F(N - P[i], k0);
                 }
 
-                res = neco._3rdparty.Concatenate_Vert(res, mx4);
+                res = _3rdparty.Concatenate_Vert(res, mx4);
 
                 tmpSr = res;
                 return res;
@@ -229,7 +224,7 @@ namespace neco
         {
             try
             {
-                Matrix res = Matrix.Transpose(Function_Sr(k0, N, l));
+                var res = Matrix.Transpose(Function_Sr(k0, N, l));
                 res = res * Function_Sr(k0, N, l);
                 tmpVr = res;
                 return res;
@@ -245,9 +240,9 @@ namespace neco
         {
             try
             {
-                int dl = d;
+                var dl = d;
 
-                for (int s = 0; s < d; s++)
+                for (var s = 0; s < d; s++)
                 {
                     if (((l >= k0 + P[s]) && (l <= k0 + P[s + 1] - 1)) || ((l <= k0 + P[s]) && (l >= k0 + P[s + 1] - 1)))
                     {
@@ -259,9 +254,9 @@ namespace neco
                     }
                 }
 
-                int ak = 0;
+                var ak = 0;
 
-                for (int s = 0; s < a; s++)
+                for (var s = 0; s < a; s++)
                 {
                     if (((l >= k0 - L[s]) && (l <= k0 - L[s - 1] - 1)) || ((l <= k0 - L[s]) && (l >= k0 - L[s - 1] - 1)))
                     {
@@ -270,11 +265,7 @@ namespace neco
                     }
                 }
 
-                Matrix res = null;
-
-                Matrix mx1, mx2, mx3;
-
-                mx1 = H[l][0] * Function_F(l - P[0], k0 + 1) * A[k0][0];
+                var mx1 = H[l][0] * Function_F(l - P[0], k0 + 1) * A[k0][0];
 
                 for (int j = 1; j < dl; j++)
                 {
@@ -283,13 +274,13 @@ namespace neco
 
                 mx1 = Matrix.Transpose(mx1);
 
-                res = mx1;
+                var res = mx1;
 
-                mx2 = H[l][0] * Function_F(l - P[0], k0 + 1) * A[k0 + L[ak]][0];
+                var mx2 = H[l][0] * Function_F(l - P[0], k0 + 1) * A[k0 + L[ak]][0];
 
-                for (int i = ak; i < a; i++)
+                for (var i = ak; i < a; i++)
                 {
-                    for (int j = 0; j < dl; j++)
+                    for (var j = 0; j < dl; j++)
                     {
                         if (i == ak && j == 0)
                         {
@@ -301,13 +292,13 @@ namespace neco
 
                 mx2 = Matrix.Transpose(mx2);
 
-                res = neco._3rdparty.Concatenate_Vert(res, mx2);
+                res = _3rdparty.Concatenate_Vert(res, mx2);
 
-                mx3 = H[l][0] * Function_F(l - P[0], k0 + L[0]) * A[k0 + L[1] - 1][0];
+                var mx3 = H[l][0] * Function_F(l - P[0], k0 + L[0]) * A[k0 + L[1] - 1][0];
 
-                for (int i = 1; i < a; i++)
+                for (var i = 1; i < a; i++)
                 {
-                    for (int j = 0; j < dl; j++)
+                    for (var j = 0; j < dl; j++)
                     {
                         if (i == 1 && j == 0)
                         {
@@ -319,7 +310,7 @@ namespace neco
 
                 mx3 = Matrix.Transpose(mx3);
 
-                res = neco._3rdparty.Concatenate_Vert(res, mx3);
+                res = _3rdparty.Concatenate_Vert(res, mx3);
 
                 res = Matrix.Transpose(res);
                 return res;
@@ -335,17 +326,13 @@ namespace neco
         {
             try
             {
-                Matrix res = null;
+                var mx1 = new Matrix(n * L[a - 1], p);
 
-                Matrix mx1;
+                var res = mx1;
 
-                mx1 = new Matrix(n * L[a - 1], p);
-
-                res = mx1;
-
-                for (int i = k0 + 1; i <= N; i++)
+                for (var i = k0 + 1; i <= N; i++)
                 {
-                    res = neco._3rdparty.Concatenate_Horiz(res, Matrix.Transpose(Function_G(i, k0, N)));
+                    res = _3rdparty.Concatenate_Horiz(res, Matrix.Transpose(Function_G(i, k0, N)));
                 }
 
                 res = Matrix.Transpose(res);
@@ -363,15 +350,7 @@ namespace neco
         {
             try
             {
-                int J = 0;
-                if (L[a - 1] > P[d - 1])
-                {
-                    J = L[a - 1];
-                }
-                else
-                {
-                    J = P[d - 1];
-                }
+                var J = Math.Max(L[a - 1], P[d - 1]);
 
                 if (J == L[a - 1])
                 {
@@ -379,13 +358,11 @@ namespace neco
                 }
                 else
                 {
-                    Matrix res = null;
+                    var mx1 = new Matrix(p * (N - k0 + 1), n * (J - L[a - 1]));
 
-                    Matrix mx1 = new Matrix(p * (N - k0 + 1), n * (J - L[a - 1]));
+                    var mx2 = Function_R1(k0, N, l);
 
-                    Matrix mx2 = Function_R1(k0, N, l);
-
-                    res = neco._3rdparty.Concatenate_Horiz(mx1, mx2);
+                    var res = _3rdparty.Concatenate_Horiz(mx1, mx2);
 
                     return res;
                 }
@@ -402,25 +379,15 @@ namespace neco
         {
             try
             {
-                int J = 0;
-                if (L[a - 1] > P[d - 1])
-                {
-                    J = L[a - 1];
-                }
-                else
-                {
-                    J = P[d - 1];
-                }
+                var J = Math.Max(L[a - 1], P[d - 1]);
 
                 if (J == L[a - 1])
                 {
-                    Matrix res = null;
+                    var mx1 = new Matrix(p * (N - k0 + 1), n * (J - P[d - 1]));
 
-                    Matrix mx1 = new Matrix(p * (N - k0 + 1), n * (J - P[d - 1]));
+                    var mx2 = Function_R(k0, N, l);
 
-                    Matrix mx2 = Function_R(k0, N, l);
-
-                    res = neco._3rdparty.Concatenate_Horiz(mx1, mx2);
+                    var res = _3rdparty.Concatenate_Horiz(mx1, mx2);
 
                     return res;
                 }
@@ -440,25 +407,25 @@ namespace neco
         {
             try
             {
-                List<List<Matrix>> R = new List<List<Matrix>>(N - k0 + 1);
+                var R = new List<List<Matrix>>(N - k0 + 1);
 
-                for (int i = 0; i < N - k0 + 1; i++)
+                for (var i = 0; i < N - k0 + 1; i++)
                 {
                     R.Add(new List<Matrix>(P[d - 1]));
                 }
 
-                for (int i = 0; i < N - k0 + 1; i++)
+                for (var i = 0; i < N - k0 + 1; i++)
                 {
-                    for (int j = 0; j < P[d - 1]; j++)
+                    for (var j = 0; j < P[d - 1]; j++)
                     {
                         R[i].Add(new Matrix(p, n));
                     }
                 }
 
-                for (int i = 0; i < P[d - 1]; i++)
+                for (var i = 0; i < P[d - 1]; i++)
                 {
-                    int di = 0;
-                    for (int v = 0; v < d; v++)
+                    var di = 0;
+                    for (var v = 0; v < d; v++)
                     {
                         if (((i >= P[v - 2] + 1) && (i <= P[v - 1])) || ((i <= P[v - 2] + 1) && (i >= P[v - 1])))
                         {
@@ -467,7 +434,7 @@ namespace neco
                         }
                     }
 
-                    for (int s = di - 1; s < d; s++)
+                    for (var s = di - 1; s < d; s++)
                     {
                         R[i][P[d - 1] - P[s + i]] = H[k0 + i - 1][s];
                     }
@@ -475,12 +442,12 @@ namespace neco
 
                 Matrix newR = null;
 
-                for (int i = 0; i < N - k0 + 1; i++)
+                for (var i = 0; i < N - k0 + 1; i++)
                 {
-                    Matrix tempRow = R[i][0];
-                    for (int j = 1; j < P[d - 1]; j++)
+                    var tempRow = R[i][0];
+                    for (var j = 1; j < P[d - 1]; j++)
                     {
-                        tempRow = neco._3rdparty.Concatenate_Horiz(tempRow, R[i][j]);
+                        tempRow = _3rdparty.Concatenate_Horiz(tempRow, R[i][j]);
                     }
                     if (i == 0)
                     {
@@ -488,7 +455,7 @@ namespace neco
                     }
                     else
                     {
-                        newR = neco._3rdparty.Concatenate_Vert(newR, tempRow);
+                        newR = _3rdparty.Concatenate_Vert(newR, tempRow);
                     }
                 }
 
@@ -518,7 +485,7 @@ namespace neco
         {
             try
             {
-                tmpSa = neco._3rdparty.Concatenate_Horiz(Function_qp(k0, N, l), Function_Sr(k0, N, l));
+                tmpSa = _3rdparty.Concatenate_Horiz(Function_qp(k0, N, l), Function_Sr(k0, N, l));
                 return tmpSa;
             }
             catch (Exception ex)
@@ -557,21 +524,12 @@ namespace neco
                 this.A = A;
                 this.H = H;
 
-                int max_N = k0 + 1000;
+                var max_N = k0 + 1000;
+                var J = Math.Max(L[a - 1], P[d - 1]);
 
-                int J = 0;
-                if (L[a - 1] > P[d - 1])
+                for (var N = k0 + 1; N <= max_N; N++)
                 {
-                    J = L[a - 1];
-                }
-                else
-                {
-                    J = P[d - 1];
-                }
-
-                for (int N = k0 + 1; N <= max_N; N++)
-                {
-                    for (int l = k0 + 1; l <= N; l++)
+                    for (var l = k0 + 1; l <= N; l++)
                     {
                         if ((Matrix.Rank(Function_Sa(k0, N, l)) == n * (J + 1)) || (Matrix.Rank(Function_Va(k0, N, l)) == n * (J + 1)))
                         {
@@ -580,9 +538,9 @@ namespace neco
                     }
                 }
 
-                for (int N = k0 + 1; N <= max_N; N++)
+                for (var N = k0 + 1; N <= max_N; N++)
                 {
-                    for (int l = k0 + 1; l <= N; l++)
+                    for (var l = k0 + 1; l <= N; l++)
                     {
                         if ((Matrix.Rank(Function_Sr(k0, N, l)) == n) || (Matrix.Rank(Function_Vr(k0, N, l)) == n))
                         {
@@ -612,60 +570,53 @@ namespace neco
                 return -1;
             }
 
-            int n = H[0][0].NoCols;
-            int p = H[0][0].NoRows;
-            int a = L.Count - 1;
-            int d = P.Count - 1;
+            var n = H[0][0].NoCols;
+            var p = H[0][0].NoRows;
+            var a = L.Count - 1;
+            var d = P.Count - 1;
 
+            J = Math.Max(L[a], P[d]);
 
-            if (L[L.Count - 1] > P[P.Count - 1])
-            {
-                J = L[a];
-            }
-            else
-            {
-                J = P[d];
-            }
+            var Va = new List<List<Matrix>>(n * (J + 1));
 
-            List<List<Matrix>> Va = new List<List<Matrix>>(n * (J + 1));
-
-            for (int i = 0; i < n * (J + 1); i++)
+            for (var i = 0; i < n * (J + 1); i++)
             {
                 Va.Add(new List<Matrix>(J + 1));
             }
 
-            for (int i = 0; i < n * (J + 1); i++)
+            for (var i = 0; i < n * (J + 1); i++)
             {
-                for (int j = 0; j < J + 1; j++)
+                for (var j = 0; j < J + 1; j++)
                 {
                     Va[i].Add(new Matrix(p, n));
                 }
             }
 
-            if (!(a == 0 && d == 0))
+          //  if (!(a == 0 && d == 0)) - Исправил на 1. Уточнить
+            if (!(a == 1 && d == 1))
             {
                 // ********* 3.125 ***************************************************
                 if (J == L[a])
                 {
                     // 1-я строка
-                    for (int s = 0; s < P.Count; s++)
+                    for (var s = 0; s < P.Count; s++)
                     {
                         Va[0][J - P[s]] = H[0][s];
                     }
 
-                    for (int i = 1; i < n * (J + 1); i++)
+                    for (var i = 1; i < n * (J + 1); i++)
                     {
                         //2 строка
                         Va[i][0] = Va[i - 1][J] * A[0][a];
 
-                        List<int> nonj = new List<int>();
-                        for (int s = 0; s < a - 1; s++)
+                        var nonj = new List<int>();
+                        for (var s = 0; s < a - 1; s++)
                         {
                             nonj.Add(J - L[s]);
                         }
 
                         //3 строка
-                        for (int j = 1; j < J + 1; j++)
+                        for (var j = 1; j < J + 1; j++)
                         {
                             if (!nonj.Contains(j))
                             {
@@ -674,9 +625,9 @@ namespace neco
                         }
 
                         //4 строка
-                        for (int s = 0; s < a; s++)
+                        for (var s = 0; s < a; s++)
                         {
-                            int j = J - L[s];
+                            var j = J - L[s];
 
                             Va[i][j] = Va[i - 1][j - 1] + Va[i - 1][J] * A[0][s];
                         }
@@ -685,7 +636,7 @@ namespace neco
                 else // ********* 3.126 ***************************************************
                 {
                     // 1-я строка
-                    for (int s = 0; s < P.Count; s++)
+                    for (var s = 0; s < P.Count; s++)
                     {
                         Va[0][J - P[s]] = H[0][s];
                     }
@@ -693,16 +644,16 @@ namespace neco
                     //2 строка
                     //it is ok
 
-                    List<int> nonj = new List<int>();
-                    for (int s = 0; s < a - 1; s++)
+                    var nonj = new List<int>();
+                    for (var s = 0; s < a - 1; s++)
                     {
                         nonj.Add(J - L[s]);
                     }
 
-                    for (int i = 1; i < n * (J + 1); i++)
+                    for (var i = 1; i < n * (J + 1); i++)
                     {
                         //3 строка
-                        for (int j = 1; j < J + 1; j++)
+                        for (var j = 1; j < J + 1; j++)
                         {
                             if (!nonj.Contains(j))
                             {
@@ -711,9 +662,9 @@ namespace neco
                         }
 
                         //4 строка
-                        for (int s = 0; s < a; s++)
+                        for (var s = 0; s < a; s++)
                         {
-                            int j = J - L[s];
+                            var j = J - L[s];
 
                             Va[i][j] = Va[i - 1][j - 1] + Va[i - 1][J] * A[0][s];
                         }
@@ -735,9 +686,9 @@ namespace neco
                     Va[0][J] = H[0][0];
 
                     //4 строка
-                    for (int i = 1; i < n * (J + 1); i++)
+                    for (var i = 1; i < n * (J + 1); i++)
                     {
-                        for (int j = 1; j < J; j++)
+                        for (var j = 1; j < J; j++)
                         {
                             Va[i][j] = Va[i - 1][j - 1];
                         }
@@ -755,12 +706,12 @@ namespace neco
                     // 2-я  и 3-я строка
                     // everithing is ok
 
-                    for (int i = 1; i < n * (J + 1); i++)
+                    for (var i = 1; i < n * (J + 1); i++)
                     {
                         //4 строка
                         if (J - L[0] > 1)
                         {
-                            for (int j = 1; j < J - L[0]; j++)
+                            for (var j = 1; j < J - L[0]; j++)
                             {
                                 Va[i][j] = Va[i - 1][j - 1];
                             }
@@ -772,14 +723,14 @@ namespace neco
 
                         if (J > J - L[0] + 1)
                         {
-                            for (int j = J - L[0] + 1; j < J; j++)
+                            for (var j = J - L[0] + 1; j < J; j++)
                             {
                                 Va[i][j] = Va[i - 1][j - 1];
                             }
                         }
                         else
                         {
-                            for (int j = J - 1; j < J - L[0] + 2; j++)
+                            for (var j = J - 1; j < J - L[0] + 2; j++)
                             {
                                 Va[i][j] = Va[i - 1][j - 1];
                             }
@@ -796,13 +747,13 @@ namespace neco
 
             Matrix newVa = null;
 
-            for (int i = 0; i < n * (J + 1); i++)
+            for (var i = 0; i < n * (J + 1); i++)
             {
                 
-                Matrix tempRow = Va[i][0];
-                for (int j = 1; j < J + 1; j++)
+                var tempRow = Va[i][0];
+                for (var j = 1; j < J + 1; j++)
                 {
-                    tempRow = neco._3rdparty.Concatenate_Horiz(tempRow, Va[i][j]);
+                    tempRow = _3rdparty.Concatenate_Horiz(tempRow, Va[i][j]);
                 }
                 if (i == 0)
                 {
@@ -810,7 +761,7 @@ namespace neco
                 }
                 else
                 {
-                    newVa = neco._3rdparty.Concatenate_Vert(newVa, tempRow);
+                    newVa = _3rdparty.Concatenate_Vert(newVa, tempRow);
 
                 }
             }
@@ -820,24 +771,24 @@ namespace neco
 
 
             // ********* 3.131 ***************************************************
-            List<List<Matrix>> Vr = new List<List<Matrix>>(n * (J + 1));
+            var Vr = new List<List<Matrix>>(n * (J + 1));
 
-            for (int i = 0; i < n * (J + 1); i++)
+            for (var i = 0; i < n * (J + 1); i++)
             {
                 Vr.Add(new List<Matrix>(1));
             }
 
-            for (int i = 0; i < n * (J + 1); i++)
+            for (var i = 0; i < n * (J + 1); i++)
             {
-                for (int j = 0; j < 1; j++)
+                for (var j = 0; j < 1; j++)
                 {
                     Vr[i].Add(new Matrix(p, n));
                 }
             }
 
-            for (int i = 0; i < n * (J + 1); i++)
+            for (var i = 0; i < n * (J + 1); i++)
             {
-                for (int j = 0; j < 1; j++)
+                for (var j = 0; j < 1; j++)
                 {
                     Vr[i][j] = Va[i][J];
                 }
@@ -845,7 +796,7 @@ namespace neco
 
             Matrix newVr = null;
 
-            for (int i = 0; i < n * (J + 1); i++)
+            for (var i = 0; i < n * (J + 1); i++)
             {
                 Matrix tempRow = Vr[i][0];
                 if (i == 0)
