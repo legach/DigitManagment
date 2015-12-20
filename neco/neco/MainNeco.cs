@@ -8,27 +8,34 @@ using System.Text;
 using System.Windows.Forms;
 using GraphLib;
 using MatrixLibrary;
+using ZedGraph;
 
 namespace neco
 {
     public partial class MainNeco : Form
     {
         static ESystem sys;
-        private bool debug = true; // разблокировать все вкладки
-        private int step = 0; // успешно выполненный этап расчета управления (1..4)
+        /// <summary>
+        /// разблокировать все вкладки
+        /// </summary>
+        private bool debug = true; 
+        /// <summary>
+        /// успешно выполненный этап расчета управления (1..4)
+        /// </summary>
+        private int step = 0; 
         private bool isSpline = false;
         private bool isNoiseEnabled = false;
+        private NewGraphics Graph;
 
         public MainNeco()
         {
-            
-       
             GUI = new GUI_Container();
+            Graph = new NewGraphics();
             InitializeComponent();
-
+            //#if DEBUG
+            //    debug = false;
+            //#endif
         }
-
-
 
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -87,7 +94,7 @@ namespace neco
 
 
                 UniversalMatrixBox = new List<MatrixDrawer>();
-                LabelList = new List<Label>();
+                LabelList = new List<System.Windows.Forms.Label>();
 
                 int loctemp = 20;
                 int j = 0;
@@ -97,7 +104,7 @@ namespace neco
                     MatrixDrawer tmp = new MatrixDrawer(new MatrixLibrary.Matrix(10, 10));
 
                     this.UniversalMatrixBox.Add(new MatrixDrawer(new MatrixLibrary.Matrix(10, 10)));
-                    this.LabelList.Add(new Label());
+                    this.LabelList.Add(new System.Windows.Forms.Label());
 
 
                     UniversalMatrixBox[i].Visible = false;
@@ -184,14 +191,16 @@ namespace neco
            
             if (this.startEmulationToolStripMenuItem.Text == "Start Emulation")
             {
+                var pointList = Graph.LoadPointsFromSys(sys.current_state.x, 1);
+                Graph.CreateGraph(zedGraphControl1, "Name:)", pointList);
 
-                //удалем панели, если оне уже есть
+                //удалем панели, если они уже есть
                 if (GUI.Panes != null)
                     for (int i = 0; i < GUI.Panes.Length; i++)
                         this.tabPage4.Controls.Remove(GUI.Panes[i]);
                 if(GUI.quality != null)
                     this.tabPage4.Controls.Remove(GUI.quality);
-                //удалем метки панелей, если оне уже есть
+                //удалем метки панелей, если они уже есть
                 if (GUI.PanesLabels != null)
                     for (int i = 0; i < GUI.PanesLabels.Length; i++)
                         this.tabPage4.Controls.Remove(GUI.PanesLabels[i]);
@@ -312,7 +321,12 @@ namespace neco
             }
         }
 
-        //Следующий шаг и по кнопке и по таймеру
+        
+        /// <summary>
+        /// Следующий шаг и по кнопке и по таймеру
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainCalcTimer_Tick(object sender, EventArgs e)
         {
             //моргалка подписью таймера
@@ -339,7 +353,15 @@ namespace neco
             //обновляем графики
             GUI.redraw();
         }
-        //фиксит отрисувку в режиме ожидания - это действие при перерисовке окна
+        
+
+
+
+        /// <summary>
+        /// фиксит отрисувку в режиме ожидания - это действие при перерисовке окна
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void MainNeco_Paint(object sender, PaintEventArgs e)
         {
             if (this.startEmulationToolStripMenuItem.Text == "Stop Emulation")
@@ -355,7 +377,11 @@ namespace neco
             }
         }
 
-
+        /// <summary>
+        /// Дискретизация
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button1_Click(object sender, EventArgs e)
         {
             tabPage1.Controls.Add(label2);
@@ -388,7 +414,7 @@ namespace neco
             int loctemp2 = 20;
 
             UniversalMatrixBox2 = new List<MatrixDrawer>();
-            LabelList2 = new List<Label>();
+            LabelList2 = new List<System.Windows.Forms.Label>();
 
 
             int j = 0;
@@ -397,7 +423,7 @@ namespace neco
                 MatrixDrawer tmp = new MatrixDrawer(new MatrixLibrary.Matrix(10, 10));
 
                 this.UniversalMatrixBox2.Add(new MatrixDrawer(new MatrixLibrary.Matrix(10, 10)));
-                this.LabelList2.Add(new Label());
+                this.LabelList2.Add(new System.Windows.Forms.Label());
 
 
                 UniversalMatrixBox2[i].Visible = false;
@@ -433,7 +459,11 @@ namespace neco
         
         }
 
-
+        /// <summary>
+        /// Управляемость
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button2_Click(object sender, EventArgs e)
         {
 
@@ -543,7 +573,11 @@ namespace neco
         }
 
 
-
+        /// <summary>
+        /// Наблюдаемость
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_observ_Click(object sender, EventArgs e)
         {
             int locationX = 10;
@@ -639,7 +673,11 @@ namespace neco
             }
         }
 
-
+        /// <summary>
+        /// Начать регулирование
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void button_regulation_Click(object sender, EventArgs e)
         {
             if (this.startEmulationToolStripMenuItem.Text == "Start Emulation")
@@ -659,6 +697,7 @@ namespace neco
            CF1.Show();
            CF1.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.F1_Closed);
         }
+
         private void CreateSys()
         {
             sys = new ESystem(CreateF1.sys1.current_state);
@@ -707,7 +746,7 @@ namespace neco
 
 
                 UniversalMatrixBox = new List<MatrixDrawer>();
-                LabelList = new List<Label>();
+                LabelList = new List<System.Windows.Forms.Label>();
 
                 int loctemp = 20;
                 int j = 0;
@@ -717,7 +756,7 @@ namespace neco
                     MatrixDrawer tmp = new MatrixDrawer(new MatrixLibrary.Matrix(10, 10));
 
                     this.UniversalMatrixBox.Add(new MatrixDrawer(new MatrixLibrary.Matrix(10, 10)));
-                    this.LabelList.Add(new Label());
+                    this.LabelList.Add(new System.Windows.Forms.Label());
 
 
                     UniversalMatrixBox[i].Visible = false;

@@ -6,6 +6,7 @@ using System.Text;
 using System.Drawing;
 using MatrixLibrary;
 using System.Windows.Forms;
+using ZedGraph;
 
 namespace neco
 {
@@ -132,7 +133,7 @@ namespace neco
         //Ручка, которой рисуем график
         Pen PPen;
         //координаты около курсора
-        Label CoordL;
+        System.Windows.Forms.Label CoordL;
 #endregion
         //конструктор
         public plotter(Point newLocation, Size newSize, Color C, List<Matrix> Arr, int LineInArrNum) :base()
@@ -147,7 +148,7 @@ namespace neco
             //графика
             PPen = new Pen(C, 2);
             //элементы формы
-            CoordL = new Label();
+            CoordL = new System.Windows.Forms.Label();
             CoordL.Visible = false;
             CoordL.BackColor = Color.LightGoldenrodYellow;
             CoordL.AutoSize = true;
@@ -170,7 +171,7 @@ namespace neco
             //графика
             PPen = new Pen(C, 2);
             //элементы формы
-            CoordL = new Label();
+            CoordL = new System.Windows.Forms.Label();
             CoordL.Visible = false;
             CoordL.BackColor = Color.LightGoldenrodYellow;
             CoordL.AutoSize = true;
@@ -239,8 +240,12 @@ namespace neco
                 (CreateGraphics()).Clear(this.BackColor);
                 //(CreateGraphics()).DrawBizies(PPen, VisibleFPoints);
                 (CreateGraphics()).DrawLines(PPen, VisibleFPoints);
+
             }
         }
+
+        
+
         //Заливка какого-либо массива отсчетов из sys сюда
         public void LoadPointsFromSys(List<Matrix> A, int GraphNum)
         {
@@ -293,8 +298,8 @@ namespace neco
         }
         #endregion
         //Всякие надписи
-        Label Y;
-        Label[] X;
+        System.Windows.Forms.Label Y;
+        System.Windows.Forms.Label[] X;
         public StackedPlotters(Point newLocation, Size newPSize, List<Matrix> Arr, Color C) : base()
         {
             Location = newLocation;
@@ -314,17 +319,17 @@ namespace neco
                 this.BringToFront();
             }
             //Метки
-            Y = new Label();
+            Y = new System.Windows.Forms.Label();
             Y.Text = "Y";
             Y.Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             Y.Location = new Point(Convert.ToInt32(0.75 * WidthOffset), 0);
             Y.AutoSize = true;
             this.Controls.Add(Y);
             Y.SendToBack();
-            X = new Label[this.Plot.Length];
+            X = new System.Windows.Forms.Label[this.Plot.Length];
             for (int i = 0; i < X.Length; i++)
             {
-                X[i] = new Label();
+                X[i] = new System.Windows.Forms.Label();
                 X[i].Text = "X";
                 X[i].Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
                 X[i].Location = new Point(Width - WidthOffset / 2 - X[i].Width, Plot[i].Location.Y + Plot[i].Height + Convert.ToInt32(GridPen.Width));
@@ -389,18 +394,38 @@ namespace neco
         
             
     }
-    //класс функционала графической формы интерфейса
+    
+    /// <summary>
+    /// класс функционала графической формы интерфейса
+    /// </summary>
     class GUI_Container
     {
-        //открытый на чтение (или не совсем) файл .json
+        /// <summary>
+        /// открытый на чтение (или не совсем) файл .json
+        /// </summary>
         public FileStream JsonFile;
-        //3 поверхности для рисования p, p и m графиков соответственно
+        
+        /// <summary>
+        /// 3 поверхности для рисования p, p и m графиков соответственно
+        /// </summary>
         public StackedPlotters[] Panes;
-        //график критерия качества
+        
+        /// <summary>
+        /// график критерия качества
+        /// </summary>
         public plotter quality;
-        //метки для плоттеров
-        public Label[] PanesLabels;
-        //открывашка файлов json и инициализирует объект ESystem им.
+        
+        /// <summary>
+        /// метки для плоттеров
+        /// </summary>
+        public System.Windows.Forms.Label[] PanesLabels;
+        
+        /// <summary>
+        /// открывашка файлов json и инициализирует объект ESystem им.
+        /// </summary>
+        /// <param name="isSpline"></param>
+        /// <param name="isNoise"></param>
+        /// <returns></returns>
         public ESystem OpenJsonFile(bool isSpline, bool isNoise)
         {
             OpenFileDialog OFD = new OpenFileDialog();
@@ -415,14 +440,20 @@ namespace neco
             }
             else return null;
         }
-        //инициализатор плоттеров для рисования и накидываетль их на форму
+
+        /// <summary>
+        /// инициализатор плоттеров для рисования и накидываетль их на форму
+        /// </summary>
+        /// <param name="PlottersCount"></param>
+        /// <param name="LeftTopCorner"></param>
+        /// <param name="sys"></param>
         public void InitPlotters(int PlottersCount, Point LeftTopCorner, ESystem sys)
         {
             //метки панелей
-            PanesLabels = new Label[PlottersCount + 1];
+            PanesLabels = new System.Windows.Forms.Label[PlottersCount + 1];
             for (int k = 0; k < PlottersCount + 1; k++)
             {
-                PanesLabels[k] = new Label();
+                PanesLabels[k] = new System.Windows.Forms.Label();
                 PanesLabels[k].Font = new System.Drawing.Font("Arial", 8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             }
             PanesLabels[0].Text = "X";
@@ -440,7 +471,11 @@ namespace neco
             // И панели качества
             quality = new plotter(new Point(LeftTopCorner.X, LeftTopCorner.Y + 110), new Size(100, 100), Color.Red, sys.current_state.quality_f);
         }
-        //масштабирование панелей под размер формы
+
+        /// <summary>
+        ///масштабирование панелей под размер формы 
+        /// </summary>
+        /// <param name="FormSize"></param>
         public void ResizePaneAsForm(Size FormSize)
         {
             for (int i = 0; i < Panes.Length; i++)
@@ -453,14 +488,21 @@ namespace neco
             quality.Location = new Point(Panes[0].Location.X, Panes[0].Location.Y + Panes[0].Height + 15);
             PanesLabels[3].Location = new Point(quality.Location.X + quality.Width/2 - PanesLabels[3].Width/2, quality.Location.Y - PanesLabels[3].Height/2);
         }
-        //перерисовка массива панелей
+
+        /// <summary>
+        /// перерисовка массива панелей
+        /// </summary>
         public void redraw()
         {
             for (int i = 0; i < this.Panes.Length;i++ )
                 Panes[i].redraw();
             quality.redraw();
         }
-        //перегружает панели из системы
+        
+        /// <summary>
+        /// перегружает панели из системы
+        /// </summary>
+        /// <param name="sys"></param>
         public void LoadPanes(ESystem sys)
         {
             Panes[0].LoadPlottersFromSys(sys.current_state.x);
@@ -470,19 +512,24 @@ namespace neco
             quality.SetVisibleRangeAll();
         }
     };
-    //класс рисовки матриц в коробочках
+
+    
+    /// <summary>
+    /// класс рисовки матриц в коробочках
+    /// </summary>
     class MatrixDrawer : GroupBox
     {
-        Label[,] Vals;
+        System.Windows.Forms.Label[,] Vals;
         int RoundCount;
+
         public MatrixDrawer(Matrix M)
         {
             RoundCount = 2;
-            Vals = new Label[M.NoRows, M.NoCols];
+            Vals = new System.Windows.Forms.Label[M.NoRows, M.NoCols];
             for (int i = 0; i < M.NoRows; i++)
                 for (int j = 0; j < M.NoCols; j++)
                 {
-                    Vals[i, j] = new Label();
+                    Vals[i, j] = new System.Windows.Forms.Label();
                     Vals[i, j].Text = Math.Round(M[i, j], RoundCount).ToString("N3");
                     //Vals[i, j].Text = M[i, j].ToString();
                     Vals[i, j].AutoSize = true;
@@ -496,16 +543,17 @@ namespace neco
             this.Size = new Size(1, 1);
             this.AutoSize = true;
         }
+
         public void ReloadMatrix(Matrix M)
         {
             //чистка
             this.Controls.Clear();
             //загрузка заново
-            Vals = new Label[M.NoRows, M.NoCols];
+            Vals = new System.Windows.Forms.Label[M.NoRows, M.NoCols];
             for (int i = 0; i < M.NoRows; i++)
                 for (int j = 0; j < M.NoCols; j++)
                 {
-                    Vals[i, j] = new Label();
+                    Vals[i, j] = new System.Windows.Forms.Label();
                     Vals[i, j].Text = Math.Round(M[i, j], RoundCount).ToString("N3");
                     //Vals[i, j].Text = M[i, j].ToString();
                     Vals[i, j].AutoSize = true;

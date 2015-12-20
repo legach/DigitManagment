@@ -30,7 +30,7 @@
 	"H":[[
 			[1, 0]
 		]],
-	"tau": [0],
+	"tau": [0,1],
 	"teta": [0,3.3],
 	"determinancy": true
 }
