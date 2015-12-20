@@ -79,6 +79,7 @@ namespace neco
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lAnalogEquation = new System.Windows.Forms.Label();
+            this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.menuStrip1.SuspendLayout();
             this.ControlPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -99,7 +100,7 @@ namespace neco
             this.editToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(864, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(1116, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -235,7 +236,7 @@ namespace neco
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(864, 490);
+            this.tabControl1.Size = new System.Drawing.Size(1116, 490);
             this.tabControl1.TabIndex = 5;
             this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabChanging);
             // 
@@ -328,11 +329,12 @@ namespace neco
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.zedGraphControl1);
             this.tabPage4.Controls.Add(this.button_regulation);
             this.tabPage4.Controls.Add(this.ControlPanel);
             this.tabPage4.Location = new System.Drawing.Point(4, 23);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(856, 463);
+            this.tabPage4.Size = new System.Drawing.Size(1108, 463);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Регулирование";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -342,7 +344,7 @@ namespace neco
             this.button_regulation.Dock = System.Windows.Forms.DockStyle.Top;
             this.button_regulation.Location = new System.Drawing.Point(0, 0);
             this.button_regulation.Name = "button_regulation";
-            this.button_regulation.Size = new System.Drawing.Size(856, 31);
+            this.button_regulation.Size = new System.Drawing.Size(1108, 31);
             this.button_regulation.TabIndex = 4;
             this.button_regulation.Text = "Начать управление";
             this.button_regulation.UseVisualStyleBackColor = true;
@@ -567,12 +569,26 @@ namespace neco
             this.lAnalogEquation.TabIndex = 0;
             this.lAnalogEquation.Text = "x`(t) = ";
             // 
+            // zedGraphControl1
+            // 
+            this.zedGraphControl1.Location = new System.Drawing.Point(704, 168);
+            this.zedGraphControl1.Name = "zedGraphControl1";
+            this.zedGraphControl1.ScrollGrace = 0D;
+            this.zedGraphControl1.ScrollMaxX = 0D;
+            this.zedGraphControl1.ScrollMaxY = 0D;
+            this.zedGraphControl1.ScrollMaxY2 = 0D;
+            this.zedGraphControl1.ScrollMinX = 0D;
+            this.zedGraphControl1.ScrollMinY = 0D;
+            this.zedGraphControl1.ScrollMinY2 = 0D;
+            this.zedGraphControl1.Size = new System.Drawing.Size(396, 287);
+            this.zedGraphControl1.TabIndex = 5;
+            // 
             // MainNeco
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(864, 514);
+            this.ClientSize = new System.Drawing.Size(1116, 514);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -671,6 +687,7 @@ namespace neco
         private System.Windows.Forms.Button button_regulation;
         private System.Windows.Forms.ToolStripMenuItem CreateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startEmulationToolStripMenuItem;
+        private ZedGraph.ZedGraphControl zedGraphControl1;
 
     }
 }

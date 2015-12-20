@@ -43,7 +43,11 @@ namespace neco
         bool determinancy;
         [DataMember]
         bool perturbation;
-        //Функция аккуратного вызова яндере
+
+        /// <summary>
+        /// Функция аккуратного вызова яндере
+        /// </summary>
+        /// <returns></returns>
         public State get_yandere_careful()
         {
             Matrix tmp;
@@ -191,7 +195,11 @@ namespace neco
                 new_determinancy,
                 new_perturbation);
         }
-        //конструктор из .json по пути к файлу.
+        
+        /// <summary>
+        /// конструктор из .json по пути к файлу.
+        /// </summary>
+        /// <param name="F"></param>
         public JasonsYandere(FileStream F)
         {
             DataContractJsonSerializer ser = new DataContractJsonSerializer(typeof(JasonsYandere));
@@ -210,15 +218,26 @@ namespace neco
             this.H = tmp.H;
         }
     }
+
+
     //Получатель данных для следующего шага. гдето от всевышнего, гдето от ктулху
     class DataGetter
     {
-        //вертает тотже State пока
+        
+        /// <summary>
+        /// вертает тотже State пока
+        /// </summary>
+        /// <param name="sys_state"></param>
+        /// <returns></returns>
         public static State GetData(State sys_state)
         {
             return sys_state;
         }
-        //вертает пустой State, но с массивами
+
+        /// <summary>
+        /// вертает пустой State, но с массивами
+        /// </summary>
+        /// <returns></returns>
         public static State GetNothing()
         {
             return new State(new List<Matrix>(),new List<Matrix>(),new List<List<Matrix>>(), new List<List<Matrix>>(), new List<Matrix>(), new List<double>(), new List<double>(), new List<Matrix>(), new List<Matrix>(), new double(), new double(), new bool(), new bool(), new bool());
