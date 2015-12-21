@@ -57,6 +57,7 @@ namespace neco
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.button_observ = new System.Windows.Forms.Button();
             this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.button_regulation = new System.Windows.Forms.Button();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.IsAccidentalExposure = new System.Windows.Forms.CheckBox();
@@ -79,7 +80,6 @@ namespace neco
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lAnalogEquation = new System.Windows.Forms.Label();
-            this.zedGraphControl1 = new ZedGraph.ZedGraphControl();
             this.menuStrip1.SuspendLayout();
             this.ControlPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -117,21 +117,21 @@ namespace neco
             // CreateToolStripMenuItem
             // 
             this.CreateToolStripMenuItem.Name = "CreateToolStripMenuItem";
-            this.CreateToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.CreateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.CreateToolStripMenuItem.Text = "Создать";
             this.CreateToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.openToolStripMenuItem.Text = "Открыть";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // startEmulationToolStripMenuItem
             // 
             this.startEmulationToolStripMenuItem.Name = "startEmulationToolStripMenuItem";
-            this.startEmulationToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
+            this.startEmulationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.startEmulationToolStripMenuItem.Text = "Start Emulation";
             this.startEmulationToolStripMenuItem.Visible = false;
             // 
@@ -174,7 +174,7 @@ namespace neco
             this.TimerIntervalLabel.AutoSize = true;
             this.TimerIntervalLabel.Location = new System.Drawing.Point(3, 0);
             this.TimerIntervalLabel.Name = "TimerIntervalLabel";
-            this.TimerIntervalLabel.Size = new System.Drawing.Size(94, 14);
+            this.TimerIntervalLabel.Size = new System.Drawing.Size(102, 13);
             this.TimerIntervalLabel.TabIndex = 1;
             this.TimerIntervalLabel.Text = "Интервал таймера";
             // 
@@ -183,7 +183,7 @@ namespace neco
             this.TimerIntervalValue.AutoSize = true;
             this.TimerIntervalValue.Location = new System.Drawing.Point(249, 0);
             this.TimerIntervalValue.Name = "TimerIntervalValue";
-            this.TimerIntervalValue.Size = new System.Drawing.Size(25, 14);
+            this.TimerIntervalValue.Size = new System.Drawing.Size(25, 13);
             this.TimerIntervalValue.TabIndex = 3;
             this.TimerIntervalValue.Text = "100";
             // 
@@ -192,7 +192,7 @@ namespace neco
             this.IsTimerEnabled.AutoSize = true;
             this.IsTimerEnabled.Location = new System.Drawing.Point(6, 17);
             this.IsTimerEnabled.Name = "IsTimerEnabled";
-            this.IsTimerEnabled.Size = new System.Drawing.Size(106, 18);
+            this.IsTimerEnabled.Size = new System.Drawing.Size(111, 17);
             this.IsTimerEnabled.TabIndex = 5;
             this.IsTimerEnabled.Text = "Таймер включен";
             this.IsTimerEnabled.UseVisualStyleBackColor = true;
@@ -233,6 +233,7 @@ namespace neco
             this.tabControl1.Controls.Add(this.tabPage4);
             this.tabControl1.Controls.Add(this.tabPage5);
             this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tabControl1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
@@ -246,10 +247,10 @@ namespace neco
             this.tabPage1.Controls.Add(this.label2);
             this.tabPage1.Controls.Add(this.lDEquation);
             this.tabPage1.Controls.Add(this.button1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 23);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(856, 463);
+            this.tabPage1.Size = new System.Drawing.Size(1108, 464);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Дискретизация";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -257,10 +258,10 @@ namespace neco
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.label2.Location = new System.Drawing.Point(37, 206);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(246, 19);
+            this.label2.Size = new System.Drawing.Size(285, 20);
             this.label2.TabIndex = 4;
             this.label2.Text = "Дискретное уравнение системы:";
             this.label2.Visible = false;
@@ -270,7 +271,7 @@ namespace neco
             this.lDEquation.AutoSize = true;
             this.lDEquation.Location = new System.Drawing.Point(334, 157);
             this.lDEquation.Name = "lDEquation";
-            this.lDEquation.Size = new System.Drawing.Size(0, 14);
+            this.lDEquation.Size = new System.Drawing.Size(0, 13);
             this.lDEquation.TabIndex = 3;
             // 
             // button1
@@ -288,10 +289,10 @@ namespace neco
             // 
             this.tabPage2.AutoScroll = true;
             this.tabPage2.Controls.Add(this.button2);
-            this.tabPage2.Location = new System.Drawing.Point(4, 23);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(856, 463);
+            this.tabPage2.Size = new System.Drawing.Size(1108, 464);
             this.tabPage2.TabIndex = 1;
             this.tabPage2.Text = "Управляемость";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -300,7 +301,7 @@ namespace neco
             // 
             this.button2.Location = new System.Drawing.Point(21, 47);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(160, 23);
+            this.button2.Size = new System.Drawing.Size(177, 23);
             this.button2.TabIndex = 1;
             this.button2.Text = "Проверить управляемость";
             this.button2.UseVisualStyleBackColor = true;
@@ -310,9 +311,9 @@ namespace neco
             // 
             this.tabPage3.AutoScroll = true;
             this.tabPage3.Controls.Add(this.button_observ);
-            this.tabPage3.Location = new System.Drawing.Point(4, 23);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Size = new System.Drawing.Size(856, 463);
+            this.tabPage3.Size = new System.Drawing.Size(1108, 464);
             this.tabPage3.TabIndex = 2;
             this.tabPage3.Text = "Наблюдаемость";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -332,12 +333,26 @@ namespace neco
             this.tabPage4.Controls.Add(this.zedGraphControl1);
             this.tabPage4.Controls.Add(this.button_regulation);
             this.tabPage4.Controls.Add(this.ControlPanel);
-            this.tabPage4.Location = new System.Drawing.Point(4, 23);
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(1108, 463);
+            this.tabPage4.Size = new System.Drawing.Size(1108, 464);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Регулирование";
             this.tabPage4.UseVisualStyleBackColor = true;
+            // 
+            // zedGraphControl1
+            // 
+            this.zedGraphControl1.Location = new System.Drawing.Point(704, 168);
+            this.zedGraphControl1.Name = "zedGraphControl1";
+            this.zedGraphControl1.ScrollGrace = 0D;
+            this.zedGraphControl1.ScrollMaxX = 0D;
+            this.zedGraphControl1.ScrollMaxY = 0D;
+            this.zedGraphControl1.ScrollMaxY2 = 0D;
+            this.zedGraphControl1.ScrollMinX = 0D;
+            this.zedGraphControl1.ScrollMinY = 0D;
+            this.zedGraphControl1.ScrollMinY2 = 0D;
+            this.zedGraphControl1.Size = new System.Drawing.Size(396, 287);
+            this.zedGraphControl1.TabIndex = 5;
             // 
             // button_regulation
             // 
@@ -357,7 +372,7 @@ namespace neco
             this.tabPage5.Location = new System.Drawing.Point(4, 23);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(856, 463);
+            this.tabPage5.Size = new System.Drawing.Size(1108, 463);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Настройки";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -367,7 +382,7 @@ namespace neco
             this.IsAccidentalExposure.AutoSize = true;
             this.IsAccidentalExposure.Location = new System.Drawing.Point(15, 82);
             this.IsAccidentalExposure.Name = "IsAccidentalExposure";
-            this.IsAccidentalExposure.Size = new System.Drawing.Size(133, 18);
+            this.IsAccidentalExposure.Size = new System.Drawing.Size(142, 17);
             this.IsAccidentalExposure.TabIndex = 1;
             this.IsAccidentalExposure.Text = "Случайное воздейсвие";
             this.IsAccidentalExposure.UseVisualStyleBackColor = true;
@@ -389,7 +404,7 @@ namespace neco
             this.IsSplainEnabled.AutoSize = true;
             this.IsSplainEnabled.Location = new System.Drawing.Point(7, 45);
             this.IsSplainEnabled.Name = "IsSplainEnabled";
-            this.IsSplainEnabled.Size = new System.Drawing.Size(159, 18);
+            this.IsSplainEnabled.Size = new System.Drawing.Size(170, 17);
             this.IsSplainEnabled.TabIndex = 1;
             this.IsSplainEnabled.Text = "Сплайновая аппроксимация";
             this.IsSplainEnabled.UseVisualStyleBackColor = true;
@@ -402,7 +417,7 @@ namespace neco
             this.IsTrapezeEnabled.CheckState = System.Windows.Forms.CheckState.Checked;
             this.IsTrapezeEnabled.Location = new System.Drawing.Point(7, 20);
             this.IsTrapezeEnabled.Name = "IsTrapezeEnabled";
-            this.IsTrapezeEnabled.Size = new System.Drawing.Size(105, 18);
+            this.IsTrapezeEnabled.Size = new System.Drawing.Size(108, 17);
             this.IsTrapezeEnabled.TabIndex = 0;
             this.IsTrapezeEnabled.Text = "Метод трапеций";
             this.IsTrapezeEnabled.UseVisualStyleBackColor = true;
@@ -569,20 +584,6 @@ namespace neco
             this.lAnalogEquation.TabIndex = 0;
             this.lAnalogEquation.Text = "x`(t) = ";
             // 
-            // zedGraphControl1
-            // 
-            this.zedGraphControl1.Location = new System.Drawing.Point(704, 168);
-            this.zedGraphControl1.Name = "zedGraphControl1";
-            this.zedGraphControl1.ScrollGrace = 0D;
-            this.zedGraphControl1.ScrollMaxX = 0D;
-            this.zedGraphControl1.ScrollMaxY = 0D;
-            this.zedGraphControl1.ScrollMaxY2 = 0D;
-            this.zedGraphControl1.ScrollMinX = 0D;
-            this.zedGraphControl1.ScrollMinY = 0D;
-            this.zedGraphControl1.ScrollMinY2 = 0D;
-            this.zedGraphControl1.Size = new System.Drawing.Size(396, 287);
-            this.zedGraphControl1.TabIndex = 5;
-            // 
             // MainNeco
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
@@ -594,10 +595,11 @@ namespace neco
             this.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
             this.ForeColor = System.Drawing.SystemColors.ControlText;
             this.MainMenuStrip = this.menuStrip1;
+            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(300, 250);
             this.Name = "MainNeco";
             this.ShowIcon = false;
-            this.Text = "eSystem neco";
+            this.Text = "Управление многосвязными объектами";
             this.ResizeEnd += new System.EventHandler(this.Form1_ResizeEnd);
             this.SizeChanged += new System.EventHandler(this.Form1_ResizeEnd);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MainNeco_Paint);

@@ -181,7 +181,7 @@
             // DelayL
             // 
             this.DelayL.AutoSize = true;
-            this.DelayL.Location = new System.Drawing.Point(312, 12);
+            this.DelayL.Location = new System.Drawing.Point(317, 12);
             this.DelayL.Name = "DelayL";
             this.DelayL.Size = new System.Drawing.Size(58, 13);
             this.DelayL.TabIndex = 5;
@@ -240,30 +240,30 @@
             // LoadMatrix
             // 
             this.LoadMatrix.Enabled = false;
-            this.LoadMatrix.Location = new System.Drawing.Point(374, 28);
+            this.LoadMatrix.Location = new System.Drawing.Point(381, 25);
             this.LoadMatrix.Name = "LoadMatrix";
-            this.LoadMatrix.Size = new System.Drawing.Size(62, 21);
+            this.LoadMatrix.Size = new System.Drawing.Size(80, 24);
             this.LoadMatrix.TabIndex = 11;
-            this.LoadMatrix.Text = "Поехали!";
+            this.LoadMatrix.Text = "Показать";
             this.LoadMatrix.UseVisualStyleBackColor = true;
             this.LoadMatrix.Click += new System.EventHandler(this.LoadMatrix_Click);
             // 
             // Hider
             // 
-            this.Hider.Location = new System.Drawing.Point(376, -1);
+            this.Hider.Location = new System.Drawing.Point(467, 25);
             this.Hider.Name = "Hider";
-            this.Hider.Size = new System.Drawing.Size(60, 23);
+            this.Hider.Size = new System.Drawing.Size(80, 24);
             this.Hider.TabIndex = 12;
             this.Hider.Text = "Скрыть";
             this.Hider.UseVisualStyleBackColor = true;
+            this.Hider.Visible = false;
             this.Hider.Click += new System.EventHandler(this.Hider_Click);
             // 
             // SysInfo
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(444, 189);
-            this.ControlBox = false;
+            this.ClientSize = new System.Drawing.Size(466, 199);
             this.Controls.Add(this.Hider);
             this.Controls.Add(this.LoadMatrix);
             this.Controls.Add(this.Sizes);
@@ -275,9 +275,10 @@
             this.Controls.Add(this.MatrixL);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
+            this.MaximizeBox = false;
             this.MinimumSize = new System.Drawing.Size(450, 214);
             this.Name = "SysInfo";
-            this.Text = "SysInfo";
+            this.Text = "Информация о системе";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

@@ -164,7 +164,7 @@ namespace neco
                 }
                 array_V.Add(tmpI);
             }
-
+            //2.120
             for (int j = 0; j < size_j; j++)
             {
                 for (int i = 0; i < size_i; i++)
@@ -454,11 +454,13 @@ namespace neco
         /// <returns></returns>
         static Matrix G(ref State sys_state, int N, int l)
         {
-            if (N == l)
-                return Gr(ref sys_state, N - l);
-                // Вызов от таких параметров не имеет смысла, конкатенация выполняется не верно.
-            else
+            //if (N == l)
+            //    return Gr(ref sys_state, N - l);
+            //// Вызов от таких параметров не имеет смысла, конкатенация выполняется не верно.
+            //else
+//            if(0<=l && l<=sys_state.a)
                 return _3rdparty.Concatenate_Horiz(Gr(ref sys_state, N-l), new Matrix(sys_state.n, sys_state.m * l));
+
         }
         /// <summary>
         /// формула 2.23, стр.40 Ga(N; k0)
