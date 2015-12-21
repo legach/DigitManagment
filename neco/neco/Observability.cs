@@ -574,8 +574,10 @@ namespace neco
             var p = H[0][0].NoRows;
             var a = L.Count - 1;
             var d = P.Count - 1;
+            L.Sort(); // Скорее всего неверно но лучше работает (меньше ошибок)
+            P.Sort(); //
 
-            J = Math.Max(L[a], P[d]);
+            J = Math.Max(Math.Abs(L[a]), P[d]);
 
             var Va = new List<List<Matrix>>(n * (J + 1));
 
@@ -798,14 +800,14 @@ namespace neco
 
             for (var i = 0; i < n * (J + 1); i++)
             {
-                Matrix tempRow = Vr[i][0];
+                var tempRow = Vr[i][0];
                 if (i == 0)
                 {
                     newVr = tempRow;
                 }
                 else
                 {
-                    newVr = neco._3rdparty.Concatenate_Vert(newVr, tempRow);
+                    newVr = _3rdparty.Concatenate_Vert(newVr, tempRow);
                 }
             }
             tmpVr = newVr;
@@ -828,6 +830,5 @@ namespace neco
 
             return 0;
         }
-
     }
 }
