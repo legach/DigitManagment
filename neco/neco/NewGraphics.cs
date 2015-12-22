@@ -158,6 +158,10 @@ namespace neco
             PointPairList listPoint2 = new PointPairList();
             PointPairList listPoint3 = new PointPairList();
             PointPairList listPoint4 = new PointPairList();
+            PointPairList listPoint5 = new PointPairList();
+            PointPairList listPoint6 = new PointPairList();
+            PointPairList listPoint7 = new PointPairList();
+            PointPairList listPoint8 = new PointPairList();
 
             if (func.Count > 0)
             {
@@ -198,6 +202,46 @@ namespace neco
                     listPoint4.Add(pointX, pointY);
                 }
                 myPane.AddCurve(name + " 04", listPoint4, Color.DarkMagenta, SymbolType.Diamond);
+            }
+            if (func.Count > 4)
+            {
+                for (int j = 0; j < func[0].Count; j++)
+                {
+                    pointX = (double)func[4][j].X;
+                    pointY = (double)func[4][j].Y;
+                    listPoint5.Add(pointX, pointY);
+                }
+                myPane.AddCurve(name + " 05", listPoint5, Color.Beige, SymbolType.Diamond);
+            }
+            if (func.Count > 5)
+            {
+                for (int j = 0; j < func[0].Count; j++)
+                {
+                    pointX = (double)func[5][j].X;
+                    pointY = (double)func[5][j].Y;
+                    listPoint6.Add(pointX, pointY);
+                }
+                myPane.AddCurve(name + " 06", listPoint6, Color.DarkRed, SymbolType.Diamond);
+            }
+            if (func.Count > 6)
+            {
+                for (int j = 0; j < func[0].Count; j++)
+                {
+                    pointX = (double)func[6][j].X;
+                    pointY = (double)func[6][j].Y;
+                    listPoint7.Add(pointX, pointY);
+                }
+                myPane.AddCurve(name + " 07", listPoint7, Color.DeepPink, SymbolType.Diamond);
+            }
+            if (func.Count > 7)
+            {
+                for (int j = 0; j < func[0].Count; j++)
+                {
+                    pointX = (double)func[7][j].X;
+                    pointY = (double)func[7][j].Y;
+                    listPoint8.Add(pointX, pointY);
+                }
+                myPane.AddCurve(name + " 08", listPoint8, Color.Tomato, SymbolType.Diamond);
             }
             int xMax = func[0].Count,
                 xMin = 0;
