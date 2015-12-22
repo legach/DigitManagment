@@ -80,6 +80,9 @@ namespace neco
             this.label3 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.lAnalogEquation = new System.Windows.Forms.Label();
+            this.zedGraphControl2 = new ZedGraph.ZedGraphControl();
+            this.zedGraphControl3 = new ZedGraph.ZedGraphControl();
+            this.zedGraphControl4 = new ZedGraph.ZedGraphControl();
             this.menuStrip1.SuspendLayout();
             this.ControlPanel.SuspendLayout();
             this.tabControl1.SuspendLayout();
@@ -117,21 +120,21 @@ namespace neco
             // CreateToolStripMenuItem
             // 
             this.CreateToolStripMenuItem.Name = "CreateToolStripMenuItem";
-            this.CreateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.CreateToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.CreateToolStripMenuItem.Text = "Создать";
             this.CreateToolStripMenuItem.Click += new System.EventHandler(this.CreateToolStripMenuItem_Click);
             // 
             // openToolStripMenuItem
             // 
             this.openToolStripMenuItem.Name = "openToolStripMenuItem";
-            this.openToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.openToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.openToolStripMenuItem.Text = "Открыть";
             this.openToolStripMenuItem.Click += new System.EventHandler(this.openToolStripMenuItem_Click);
             // 
             // startEmulationToolStripMenuItem
             // 
             this.startEmulationToolStripMenuItem.Name = "startEmulationToolStripMenuItem";
-            this.startEmulationToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.startEmulationToolStripMenuItem.Size = new System.Drawing.Size(147, 22);
             this.startEmulationToolStripMenuItem.Text = "Start Emulation";
             this.startEmulationToolStripMenuItem.Visible = false;
             // 
@@ -219,9 +222,9 @@ namespace neco
             this.ControlPanel.Controls.Add(this.TimerIntervalValue);
             this.ControlPanel.Controls.Add(this.TimerIntervalLabel);
             this.ControlPanel.Controls.Add(this.TimerIntervalScrollBar);
-            this.ControlPanel.Location = new System.Drawing.Point(3, 34);
+            this.ControlPanel.Location = new System.Drawing.Point(0, 3);
             this.ControlPanel.Name = "ControlPanel";
-            this.ControlPanel.Size = new System.Drawing.Size(400, 47);
+            this.ControlPanel.Size = new System.Drawing.Size(400, 38);
             this.ControlPanel.TabIndex = 3;
             this.ControlPanel.Visible = false;
             // 
@@ -237,7 +240,7 @@ namespace neco
             this.tabControl1.Location = new System.Drawing.Point(0, 24);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(1116, 490);
+            this.tabControl1.Size = new System.Drawing.Size(1116, 709);
             this.tabControl1.TabIndex = 5;
             this.tabControl1.Selecting += new System.Windows.Forms.TabControlCancelEventHandler(this.TabChanging);
             // 
@@ -330,19 +333,22 @@ namespace neco
             // 
             // tabPage4
             // 
+            this.tabPage4.Controls.Add(this.zedGraphControl4);
+            this.tabPage4.Controls.Add(this.zedGraphControl3);
+            this.tabPage4.Controls.Add(this.zedGraphControl2);
             this.tabPage4.Controls.Add(this.zedGraphControl1);
             this.tabPage4.Controls.Add(this.button_regulation);
             this.tabPage4.Controls.Add(this.ControlPanel);
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Size = new System.Drawing.Size(1108, 464);
+            this.tabPage4.Size = new System.Drawing.Size(1108, 683);
             this.tabPage4.TabIndex = 3;
             this.tabPage4.Text = "Регулирование";
             this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // zedGraphControl1
             // 
-            this.zedGraphControl1.Location = new System.Drawing.Point(704, 168);
+            this.zedGraphControl1.Location = new System.Drawing.Point(0, 43);
             this.zedGraphControl1.Name = "zedGraphControl1";
             this.zedGraphControl1.ScrollGrace = 0D;
             this.zedGraphControl1.ScrollMaxX = 0D;
@@ -351,15 +357,15 @@ namespace neco
             this.zedGraphControl1.ScrollMinX = 0D;
             this.zedGraphControl1.ScrollMinY = 0D;
             this.zedGraphControl1.ScrollMinY2 = 0D;
-            this.zedGraphControl1.Size = new System.Drawing.Size(396, 287);
+            this.zedGraphControl1.Size = new System.Drawing.Size(599, 320);
             this.zedGraphControl1.TabIndex = 5;
             // 
             // button_regulation
             // 
-            this.button_regulation.Dock = System.Windows.Forms.DockStyle.Top;
-            this.button_regulation.Location = new System.Drawing.Point(0, 0);
+            this.button_regulation.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.button_regulation.Location = new System.Drawing.Point(406, 3);
             this.button_regulation.Name = "button_regulation";
-            this.button_regulation.Size = new System.Drawing.Size(1108, 31);
+            this.button_regulation.Size = new System.Drawing.Size(228, 38);
             this.button_regulation.TabIndex = 4;
             this.button_regulation.Text = "Начать управление";
             this.button_regulation.UseVisualStyleBackColor = true;
@@ -369,10 +375,10 @@ namespace neco
             // 
             this.tabPage5.Controls.Add(this.IsAccidentalExposure);
             this.tabPage5.Controls.Add(this.groupBox1);
-            this.tabPage5.Location = new System.Drawing.Point(4, 23);
+            this.tabPage5.Location = new System.Drawing.Point(4, 22);
             this.tabPage5.Name = "tabPage5";
             this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage5.Size = new System.Drawing.Size(1108, 463);
+            this.tabPage5.Size = new System.Drawing.Size(1108, 464);
             this.tabPage5.TabIndex = 4;
             this.tabPage5.Text = "Настройки";
             this.tabPage5.UseVisualStyleBackColor = true;
@@ -584,12 +590,54 @@ namespace neco
             this.lAnalogEquation.TabIndex = 0;
             this.lAnalogEquation.Text = "x`(t) = ";
             // 
+            // zedGraphControl2
+            // 
+            this.zedGraphControl2.Location = new System.Drawing.Point(0, 363);
+            this.zedGraphControl2.Name = "zedGraphControl2";
+            this.zedGraphControl2.ScrollGrace = 0D;
+            this.zedGraphControl2.ScrollMaxX = 0D;
+            this.zedGraphControl2.ScrollMaxY = 0D;
+            this.zedGraphControl2.ScrollMaxY2 = 0D;
+            this.zedGraphControl2.ScrollMinX = 0D;
+            this.zedGraphControl2.ScrollMinY = 0D;
+            this.zedGraphControl2.ScrollMinY2 = 0D;
+            this.zedGraphControl2.Size = new System.Drawing.Size(599, 320);
+            this.zedGraphControl2.TabIndex = 6;
+            // 
+            // zedGraphControl3
+            // 
+            this.zedGraphControl3.Location = new System.Drawing.Point(596, 43);
+            this.zedGraphControl3.Name = "zedGraphControl3";
+            this.zedGraphControl3.ScrollGrace = 0D;
+            this.zedGraphControl3.ScrollMaxX = 0D;
+            this.zedGraphControl3.ScrollMaxY = 0D;
+            this.zedGraphControl3.ScrollMaxY2 = 0D;
+            this.zedGraphControl3.ScrollMinX = 0D;
+            this.zedGraphControl3.ScrollMinY = 0D;
+            this.zedGraphControl3.ScrollMinY2 = 0D;
+            this.zedGraphControl3.Size = new System.Drawing.Size(504, 320);
+            this.zedGraphControl3.TabIndex = 7;
+            // 
+            // zedGraphControl4
+            // 
+            this.zedGraphControl4.Location = new System.Drawing.Point(596, 363);
+            this.zedGraphControl4.Name = "zedGraphControl4";
+            this.zedGraphControl4.ScrollGrace = 0D;
+            this.zedGraphControl4.ScrollMaxX = 0D;
+            this.zedGraphControl4.ScrollMaxY = 0D;
+            this.zedGraphControl4.ScrollMaxY2 = 0D;
+            this.zedGraphControl4.ScrollMinX = 0D;
+            this.zedGraphControl4.ScrollMinY = 0D;
+            this.zedGraphControl4.ScrollMinY2 = 0D;
+            this.zedGraphControl4.Size = new System.Drawing.Size(504, 320);
+            this.zedGraphControl4.TabIndex = 8;
+            // 
             // MainNeco
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 14F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.ClientSize = new System.Drawing.Size(1116, 514);
+            this.ClientSize = new System.Drawing.Size(1116, 733);
             this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.menuStrip1);
             this.Font = new System.Drawing.Font("Times New Roman", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
@@ -690,6 +738,9 @@ namespace neco
         private System.Windows.Forms.ToolStripMenuItem CreateToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem startEmulationToolStripMenuItem;
         private ZedGraph.ZedGraphControl zedGraphControl1;
+        private ZedGraph.ZedGraphControl zedGraphControl4;
+        private ZedGraph.ZedGraphControl zedGraphControl3;
+        private ZedGraph.ZedGraphControl zedGraphControl2;
 
     }
 }

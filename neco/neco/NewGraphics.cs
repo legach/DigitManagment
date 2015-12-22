@@ -133,6 +133,81 @@ namespace neco
             zgc.Invalidate();
         }
 
+
+        /// <summary>
+        /// Построение графиков zgraph
+        /// </summary>
+        /// <param name="zgc">Объект на форме</param>
+        /// <param name="func">Массив значений</param>
+        /// <param name="name">Имя</param>
+        public void CreateGraph(ZedGraphControl zgc, string name, List<List<PointF>> func, int numOfGraph)
+        {
+            // get a reference to the GraphPane    
+            GraphPane myPane = zgc.GraphPane;
+
+            // Очистим список кривых на тот случай, если до этого сигналы уже были нарисованы
+            myPane.CurveList.Clear();
+
+            // Set the Titles    
+            myPane.Title.Text = name;
+            myPane.XAxis.Title.Text = "X";
+            myPane.YAxis.Title.Text = "Y";
+
+            double pointX, pointY;
+            PointPairList listPoint1 = new PointPairList();
+            PointPairList listPoint2 = new PointPairList();
+            PointPairList listPoint3 = new PointPairList();
+            PointPairList listPoint4 = new PointPairList();
+
+            if (func.Count > 0)
+            {
+                for (int j = 0; j < func[0].Count; j++)
+                {
+                    pointX = (double)func[0][j].X;
+                    pointY = (double)func[0][j].Y;
+                    listPoint1.Add(pointX, pointY);
+                }
+                myPane.AddCurve(name + " 01", listPoint1, Color.DarkCyan, SymbolType.Diamond);
+            }
+            if (func.Count > 1)
+            {
+                for (int j = 0; j < func[0].Count; j++)
+                {
+                    pointX = (double)func[1][j].X;
+                    pointY = (double)func[1][j].Y;
+                    listPoint2.Add(pointX, pointY);
+                }
+                myPane.AddCurve(name + " 02", listPoint2, Color.DarkBlue, SymbolType.Diamond);
+            }
+            if (func.Count > 2)
+            {
+                for (int j = 0; j < func[0].Count; j++)
+                {
+                    pointX = (double)func[2][j].X;
+                    pointY = (double)func[2][j].Y;
+                    listPoint3.Add(pointX, pointY);
+                }
+                myPane.AddCurve(name + " 03", listPoint3, Color.DarkGreen, SymbolType.Diamond);
+            }
+            if (func.Count > 3)
+            {
+                for (int j = 0; j < func[0].Count; j++)
+                {
+                    pointX = (double)func[3][j].X;
+                    pointY = (double)func[3][j].Y;
+                    listPoint4.Add(pointX, pointY);
+                }
+                myPane.AddCurve(name + " 04", listPoint4, Color.DarkMagenta, SymbolType.Diamond);
+            }
+            int xMax = func[0].Count,
+                xMin = 0;
+            myPane.XAxis.Scale.Max = xMax + 1;
+            myPane.XAxis.Scale.Min = xMin - 1;
+            zgc.AxisChange();
+            zgc.Invalidate();
+        }
+
+
         /// <summary>
         /// Построение графиков zgraph
         /// </summary>
@@ -155,25 +230,26 @@ namespace neco
             // Make up some data arrays based on the Sine function    
             double pointX, pointY;
             PointPairList listPoint = new PointPairList();
-            foreach(var pair in listFunc)
+            foreach (var pair in listFunc)
             {
                 pointX = pair.X;
                 pointY = pair.Y;
                 listPoint.Add(pointX, pointY);
-
             }
 
-            // Generate a red curve with diamond    // symbols, and "Porsche" in the legend    
-            //LineItem myCurve1 = myPane.AddCurve("Line",
-            //     list1, Color.Red, SymbolType.None);
-
-            LineItem myCurve1 = myPane.AddCurve("Line",
-                 listPoint, Color.Red, SymbolType.Diamond);
-
-            int xMax = (int)listFunc.Max(l=>l.X),
-                xMin = 0;
-            myPane.XAxis.Scale.Max = xMax + 20;
-            myPane.XAxis.Scale.Min = xMin - 20;
+            LineItem myCurve1 = myPane.AddCurve(name,
+                 listPoint, Color.DarkCyan, SymbolType.Diamond);
+            int xMax = 0, xMin = 0;
+            try
+            {
+                xMax = (int)listFunc.Max(l => l.X);
+            }
+            catch (Exception e)
+            {
+                xMax = 0;
+            }
+            myPane.XAxis.Scale.Max = xMax + 10;
+            myPane.XAxis.Scale.Min = xMin - 10;
             // Вызываем метод AxisChange (), чтобы обновить данные об осях.
             // В противном случае на рисунке будет показана только часть графика,
             // которая умещается в интервалы по осям, установленные по умолчанию

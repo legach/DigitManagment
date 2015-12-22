@@ -29,8 +29,10 @@ namespace neco
         public void next_stage(State diff_state)
         {
             if (Digitizer.DigitizeSystem(ref this.current_state) && Controllability.IsSystemControllability(ref this.current_state) && Observability.IsSystemObservability(ref this.current_state))
+            {
                 if (!Regulator.MakeRegulation(ref this.current_state, diff_state))
                     throw new ArgumentException("Ошибка при регулировании");//если вернули false, то для такой системы нет регулятора
+            }
             else
                 throw new ArgumentException("Ошибка при определении параметров системы");//если не удалось даже подготовить к регуляции
         

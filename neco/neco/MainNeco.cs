@@ -191,35 +191,32 @@ namespace neco
            
             if (this.startEmulationToolStripMenuItem.Text == "Start Emulation")
             {
-                var pointList = Graph.LoadPointsFromSys(sys.current_state.x, 1);
-                Graph.CreateGraph(zedGraphControl1, "Name:)", pointList);
+                List<List<PointF>> pointList0 = new List<List<PointF>>();
+                for (int i = 0; i < sys.current_state.n; i++)
+                    pointList0.Add(Graph.LoadPointsFromSys(sys.current_state.x, i));
+                Graph.CreateGraph(zedGraphControl1, "X", pointList0, sys.current_state.n);
 
-                //удалем панели, если они уже есть
-                if (GUI.Panes != null)
-                    for (int i = 0; i < GUI.Panes.Length; i++)
-                        this.tabPage4.Controls.Remove(GUI.Panes[i]);
-                if(GUI.quality != null)
-                    this.tabPage4.Controls.Remove(GUI.quality);
-                //удалем метки панелей, если они уже есть
-                if (GUI.PanesLabels != null)
-                    for (int i = 0; i < GUI.PanesLabels.Length; i++)
-                        this.tabPage4.Controls.Remove(GUI.PanesLabels[i]);
-                //накидываем панели
-                GUI.InitPlotters(3, new Point(10, 125), sys);
-                for (int i = 0; i < GUI.Panes.Length; i++)
-                    this.tabPage4.Controls.Add(GUI.Panes[i]);
-                //график качества
-                this.tabPage4.Controls.Add(GUI.quality);
-                //накидываем метки для панелей
-                for (int i = 0; i < GUI.PanesLabels.Length; i++)
-                    this.tabPage4.Controls.Add(GUI.PanesLabels[i]);
-                //вызываем событие изменения размера для перерисовки
-                this.OnSizeChanged(e);
+                List<List<PointF>> pointList1 = new List<List<PointF>>();
+                for (int i = 0; i < sys.current_state.m; i++)
+                    pointList1.Add(Graph.LoadPointsFromSys(sys.current_state.u, i));
+                Graph.CreateGraph(zedGraphControl2, "U", pointList1, sys.current_state.m);
+
+                List<List<PointF>> pointList2 = new List<List<PointF>>();
+                for (int i = 0; i < sys.current_state.y[0].NoRows; i++)
+                    pointList2.Add(Graph.LoadPointsFromSys(sys.current_state.y, i));
+                Graph.CreateGraph(zedGraphControl3, "Y", pointList2, sys.current_state.y[0].NoRows);
+
+                //var pointList2 = Graph.LoadPointsFromSys(sys.current_state.y, 0);
+                //Graph.CreateGraph(zedGraphControl3, "Y", pointList2);
+
+                var pointList3 = Graph.LoadPointsFromDouble(sys.current_state.quality_f);
+                Graph.CreateGraph(zedGraphControl4, "F (Quality)", pointList3);
+
                 //изменение текста кнопки
                 this.startEmulationToolStripMenuItem.Text = "Stop Emulation";
                 //принудительный стоп таймера, чтобы дать возможность поставить тип аппроксимации и случайные воздействия
                 this.IsTimerEnabled.Checked = false;
-                this.IsTimerEnabled_CheckedChanged(this,e);
+                this.IsTimerEnabled_CheckedChanged(this, e);
                 //включаем интерфейс
                 this.ControlPanel.Visible = true;
                 //отключаем открытие файла
@@ -227,14 +224,6 @@ namespace neco
             }
             else
             {
-                //удаляем панели
-                for (int i = 0; i < GUI.Panes.Length; i++)
-                    this.tabPage4.Controls.Remove(GUI.Panes[i]);
-                this.tabPage4.Controls.Remove(GUI.quality);
-                //удаляем метки
-                if (GUI.PanesLabels != null)
-                    for (int i = 0; i < GUI.PanesLabels.Length; i++)
-                        this.tabPage4.Controls.Remove(GUI.PanesLabels[i]);
                 //останавливаем время
                 this.IsTimerEnabled.Checked = false;
                 //меняем название кнопки меню
@@ -246,7 +235,7 @@ namespace neco
 
             }
 
-            Form1_ResizeEnd(sender, e);
+            //Form1_ResizeEnd(sender, e);
 
         }
         //изменение размера
@@ -349,9 +338,25 @@ namespace neco
             else
                 SI.UpdateInfo(sys);
             //грузим новые графики
-            GUI.LoadPanes(sys);
+            //GUI.LoadPanes(sys);
             //обновляем графики
-            GUI.redraw();
+            //GUI.redraw();
+            List<List<PointF>> pointList0 = new List<List<PointF>>();
+            for (int i = 0; i < sys.current_state.n; i++)
+                pointList0.Add(Graph.LoadPointsFromSys(sys.current_state.x, i));
+            Graph.CreateGraph(zedGraphControl1, "X", pointList0, sys.current_state.n);
+            List<List<PointF>> pointList1 = new List<List<PointF>>();
+            for (int i = 0; i < sys.current_state.m; i++)
+                pointList1.Add(Graph.LoadPointsFromSys(sys.current_state.u, i));
+            Graph.CreateGraph(zedGraphControl2, "U", pointList1, sys.current_state.m);
+            List<List<PointF>> pointList2 = new List<List<PointF>>();
+            for (int i = 0; i < sys.current_state.y[0].NoRows; i++)
+                pointList2.Add(Graph.LoadPointsFromSys(sys.current_state.y, i));
+            Graph.CreateGraph(zedGraphControl3, "Y", pointList2, sys.current_state.y[0].NoRows);
+            //var pointList2 = Graph.LoadPointsFromSys(sys.current_state.y, 0);
+            //Graph.CreateGraph(zedGraphControl3, "Y", pointList2);
+            var pointList3 = Graph.LoadPointsFromDouble(sys.current_state.quality_f);
+            Graph.CreateGraph(zedGraphControl4, "F (Quality)", pointList3);
         }
         
 
