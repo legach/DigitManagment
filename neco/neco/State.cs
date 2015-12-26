@@ -125,6 +125,16 @@ namespace neco
         ///оказывацца зависят от времени
         /// </summary>
         List<Matrix> int_Psi;
+
+        /// <summary>
+        /// Список матриц Gx. 5.58
+        /// </summary>
+        List<Matrix> regulator_Gx;
+        /// <summary>
+        /// Список матриц Gu. 5.58
+        /// </summary>
+        List<Matrix> regulator_Gu;
+
         #endregion
 #region свойства
         /// <summary>
@@ -623,7 +633,43 @@ namespace neco
                 throw new InvalidOperationException("Система нестационарна!");
         }
         #endregion
+
+        #region функции вытаскивания/затаскивания приватных матриц Gx,Gu.
+        //политика такова - даже если дали больше паарметров (вместе со временем, а система стационарна), то вытаскивается что есть
+
+        /// <summary>
+        /// матрица A
+        /// </summary>
+        /// <returns></returns>
+        public List<Matrix> get_Gx()
+        {
+            return this.regulator_Gx;
+        }
+
+        public void set_Gx(Matrix new_Gx, int k)
+        {
+            this.regulator_Gx.Add(new_Gx);
+        }
+        // ----------------------------------------------------------------------------------
+
+        /// <summary>
+        ///матрица B
+        ///геттеры
+        ///целиком
+        /// </summary>
+        /// <returns></returns>
+        public List<Matrix> get_Gu()
+        {
+            return this.regulator_Gu;
+        }
+
+        public void set_Gu(Matrix new_Gu, int k)
+        {
+            this.regulator_Gu.Add(new_Gu);
+        }
         #endregion
+
+#endregion
 #region размерности векторов и матриц
         /// <summary>
         /// количество строк отсчета вектора состояний x
@@ -818,6 +864,9 @@ namespace neco
             L = new List<int>();
             M = new List<int>();
             P = new List<int>();
+
+            regulator_Gx = new List<Matrix>();
+            regulator_Gu = new List<Matrix>();
         }
         #endregion
     }

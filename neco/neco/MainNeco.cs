@@ -357,6 +357,9 @@ namespace neco
             //Graph.CreateGraph(zedGraphControl3, "Y", pointList2);
             var pointList3 = Graph.LoadPointsFromDouble(sys.current_state.quality_f);
             Graph.CreateGraph(zedGraphControl4, "F (Quality)", pointList3);
+
+            view_matrixG.Enabled = true;
+
         }
         
 
@@ -693,7 +696,7 @@ namespace neco
             else button_regulation.Text = "Начать управление";
 
             startEmulationToolStripMenuItem_Click(sender, e);
-            
+
         }
 
         private void CreateToolStripMenuItem_Click(object sender, EventArgs e)
@@ -801,6 +804,18 @@ namespace neco
             if (CreateF1.sys1 != null)
             {
                 CreateSys();
+            }
+        }
+
+        private void view_matrixG_Click(object sender, EventArgs e)
+        {
+            if(sys.current_state.get_Gx().Any() || sys.current_state.get_Gu().Any())
+            {
+                if (VG == null)
+                    VG = new ViewerG(sys);
+                else
+                    VG.UpdateInfo(sys);
+                this.VG.Show();
             }
         }
 

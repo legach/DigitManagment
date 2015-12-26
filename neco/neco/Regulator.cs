@@ -8,8 +8,12 @@ namespace neco
 {
     class Regulator
     {
-        private Regulator() { ;}
-        //принимает system_state текущей системы и diff_state со всей колбасой параметров на следующий шаг
+        /// <summary>
+        /// принимает system_state текущей системы и diff_state со всей колбасой параметров на следующий шаг
+        /// </summary>
+        /// <param name="system_state"></param>
+        /// <param name="diff_state"></param>
+        /// <returns></returns>
         public static bool MakeRegulation(ref State system_state, State diff_state)
         {
             //к чорту ветвление - слишком наркоманское оно
@@ -24,7 +28,10 @@ namespace neco
             throw new NotImplementedException();
         }
 
-        //рулилка стационарной детерменированной системы
+        /// <summary>
+        /// рулилка стационарной детерменированной системы
+        /// </summary>
+        /// <param name="system_state"></param>
         private static void Regulate_Perm_Det(ref State system_state)
         {
             //матрица для текущего управления
@@ -46,9 +53,17 @@ namespace neco
             //ф-ла 5.58 стр. 139
             //два цикла наплюсовывания в управление
             for (int i = 0; i < system_state.a; i++)
+            {
                 Uk += Gx(system_state, i) * system_state.x[system_state.L[i]];
+                system_state.set_Gx(Gx(system_state, i), i);
+            }
+
             for (int i = 1; i < system_state.c; i++)
+            {
                 Uk += Gu(system_state, i) * system_state.u[system_state.M[i]];
+                system_state.set_Gu(Gu(system_state, i), i);
+            }
+                
 
             //внесение управления на место
             system_state.u.Insert(0, Uk);
