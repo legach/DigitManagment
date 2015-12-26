@@ -1,5 +1,6 @@
-neco/neco/bin/
 *.exe
-neco/neco.v12.suo
-neco/neco/obj/x86/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 neco/neco/obj/x86/Debug/neco.csproj.FileListAbsolute.txt
+*.suo
+*.cache
+*.pdb
+*.Cache
