@@ -183,20 +183,24 @@ namespace neco
 
                 res = _3rdparty.Concatenate_Vert(res, mx1);
 
-                var mx2 = H[k0 + P[d - 2]][0] * Function_F(k0 + P[d - 1] + P[0] - 1, k0);
+                //var mx2 = H[k0 + P[d - 2]][0] * Function_F(k0 + P[d - 1] + P[0] - 1, k0);
+                var mx2 = H[k0 + P[d - 2]][0] * Function_F(k0 + P[d - 1] - P[0] - 1, k0);
 
                 for (var i = 1; i < d - 1; i++)
                 {
-                    mx2 += H[k0 + P[d - 2]][i] * Function_F(k0 + P[d - 1] + P[i] - 1, k0);
+                    //mx2 += H[k0 + P[d - 2]][i] * Function_F(k0 + P[d - 1] + P[i] - 1, k0);
+                    mx2 += H[k0 + P[d - 2]][i] * Function_F(k0 + P[d - 1] - P[i] - 1, k0);
                 }
 
                 res = _3rdparty.Concatenate_Vert(res, mx2);
 
-                var mx3 = H[k0 + P[d - 1]][0] * Function_F(k0 + P[d - 1] + P[0], k0);
+                //var mx3 = H[k0 + P[d - 1]][0] * Function_F(k0 + P[d - 1] + P[0], k0);
+                var mx3 = H[k0 + P[d - 1]][0] * Function_F(k0 + P[d - 1] - P[0], k0);
 
                 for (var i = 1; i < d; i++)
                 {
-                    mx3 += H[k0 + P[d - 1]][i] * Function_F(k0 + P[d - 1] + P[i], k0);
+                    //mx3 += H[k0 + P[d - 1]][i] * Function_F(k0 + P[d - 1] + P[i], k0);
+                    mx3 += H[k0 + P[d - 1]][i] * Function_F(k0 + P[d - 1] - P[i], k0);
                 }
 
                 res = _3rdparty.Concatenate_Vert(res, mx3);
@@ -326,7 +330,8 @@ namespace neco
         {
             try
             {
-                var mx1 = new Matrix(n * L[a - 1], p);
+                //var mx1 = new Matrix(n * L[a - 1], p);
+                var mx1 = new Matrix(n * L[a - 1], p * (N - k0 + 1));
 
                 var res = mx1;
 
@@ -739,7 +744,8 @@ namespace neco
                         }
 
                         //5 строка
-                        Va[i][J - 1] = Va[i - 1][J - L[0] - 1] + Va[i - 1][J] * A[0][1];
+                        //Va[i][J - 1] = Va[i - 1][J - L[0] - 1] + Va[i - 1][J] * A[0][1];
+                        Va[i][J] = Va[i - 1][J - L[0] - 1] + Va[i - 1][J] * A[0][1];
 
                         //6 строка
                         Va[i][J] = Va[i - 1][J - 1] + Va[i - 1][J] * A[0][0];
