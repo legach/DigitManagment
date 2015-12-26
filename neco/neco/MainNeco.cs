@@ -811,11 +811,8 @@ namespace neco
         {
             if(sys.current_state.get_Gx().Any() || sys.current_state.get_Gu().Any())
             {
-                if (VG == null)
-                    VG = new ViewerG(sys);
-                else
-                    VG.UpdateInfo(sys);
-                this.VG.Show();
+               VG = new ViewerG(sys);
+               VG.Show();
             }
         }
 
